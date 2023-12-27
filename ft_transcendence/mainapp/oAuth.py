@@ -1,7 +1,11 @@
 import requests
 import environ
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+env_file_path = BASE_DIR / '.env'
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env(env_file=env_file_path)
 
 UID = env("UID")
 SECRET = env("SECRET")
@@ -43,9 +47,9 @@ print(access_token)
 
 if access_token:
     # Örnek: Cursus verilerini çek
-    cursus_data = fetch_data("/v2/cursus", access_token)
-    print("Cursus Data:", cursus_data)
+    cursus_data = fetch_data("/v2/me", access_token)
+    print("Tcelik Data:", cursus_data)
 
     # Örnek: Cursus 42'deki kullanıcıları çek
-    users_in_cursus = fetch_data("/v2/cursus/42/users", access_token, params={"page[number]": 1})
-    print("Users in Cursus 42:", users_in_cursus)
+    #users_in_cursus = fetch_data("/v2/cursus/42/users", access_token, params={"page[number]": 1})
+    #print("Users in Cursus 42:", users_in_cursus)
