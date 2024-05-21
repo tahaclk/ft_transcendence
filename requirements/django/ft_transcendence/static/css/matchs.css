@@ -1,0 +1,8 @@
+.img-st img{
+    width: 80px !important;
+    height: 80px !important;
+}
+
+.f-1{
+    flex: 1 !important;
+}

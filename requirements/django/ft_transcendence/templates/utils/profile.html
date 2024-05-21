@@ -1,0 +1,147 @@
+{% load static %}
+{% include "navbar.html" with user=user urls=urls ownerUser=ownerUser %}
+{% block editProfileCss %}
+  <link href="{% static 'css/editProfile.css' %}">
+  <link href="{% static 'css/dataPopup.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock editProfileCss %}
+
+<div id="profile_datas" style="display: none!important;">
+  <input type="hidden" name="person-uid" value="{{user.uid}}">
+  {% csrf_token %}
+</div>
+<div id="dataPopup">
+</div>
+<div class="container">
+  <div class="main-body">
+    <div class="row gutters-sm">
+      <div class="col-lg-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div data-person-uid="{{user.uid}}" class="person-profile d-flex flex-column align-items-center text-center">
+              <img src="{{user.imageLarge.url}}" alt="user_image" class="rounded-circle p-1 object-fit-cover" width="150" height="150">
+              <div id="profileButtons" class="mt-3">
+                <h4>{{user.displayname}}</h4>
+                <p class="text-secondary mb-1">{{user.username}}</p>
+                {% if ownerUser.uid != user.uid %}
+                {% if friendshipStatus == "blocked" %}
+                {% elif friendshipStatus == "received" %}
+                  <button data-request-mod="acceptRequest" class="btn btn-success friend-request mb-1">{{langTexts.accept}}</button>
+                  <button data-request-mod="declineRequest" class="btn btn-danger friend-request mb-1">{{langTexts.decline}}</button>
+                {% elif friendshipStatus == "friend" %}
+                  <button data-request-mod="unfriendRequest" class="btn btn-outline-danger friend-request mb-1">{{langTexts.unfriend}}</button>
+                {% elif friendshipStatus == "sended" %}
+                  <button data-request-mod="cancelRequest" class="btn btn-primary friend-request mb-1">{{langTexts.cancelReq}}</button>
+                {% elif friendshipStatus == "none" %}
+                  <button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request mb-1">{{langTexts.friendReq}}</button>
+                {% endif %}
+                {% if friendshipStatus == "friend" %}
+                  <button id="messagebtn" class="btn btn-primary mb-1">{{langTexts.msg}}</button>
+                {% endif %}
+                {% if blockStatus == "nonBlocked" %}
+                  <button id="block-requests" data-request-mod="block" class="btn btn-danger mb-1">{{langTexts.block}}</button>
+                {% elif blockStatus == "blocked" %}
+                  <button id="block-requests" data-request-mod="unblock" class="btn btn-outline-danger mb-1">{{langTexts.unblock}}</button>
+                {% endif %}
+                {% endif %}
+              </div>
+            </div>
+            <hr class="my-4">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe me-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
+                <span class="text-secondary">{% if user.website %}{{user.website}}{% else %}-{% endif %}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github me-2 icon-inline"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>Github</h6>
+                <span class="text-secondary">{% if user.github %}{{user.github}}{% else %}-{% endif %}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" class="me-2" xml:space="preserve"><path d="M14.095479,10.316482L22.286354,1h-1.940718l-7.115352,8.087682L7.551414,1H1l8.589488,12.231093L1,23h1.940717  l7.509372-8.542861L16.448587,23H23L14.095479,10.316482z M11.436522,13.338465l-0.871624-1.218704l-6.924311-9.68815h2.981339  l5.58978,7.82155l0.867949,1.218704l7.26506,10.166271h-2.981339L11.436522,13.338465z"/></svg>X</h6>
+                <span class="text-secondary">{% if user.twitter %}{{user.twitter}}{% else %}-{% endif %}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24px" height="24px" class="me-2"><path d="M 11.46875 5 C 7.917969 5 5 7.914063 5 11.46875 L 5 20.53125 C 5 24.082031 7.914063 27 11.46875 27 L 20.53125 27 C 24.082031 27 27 24.085938 27 20.53125 L 27 11.46875 C 27 7.917969 24.085938 5 20.53125 5 Z M 11.46875 7 L 20.53125 7 C 23.003906 7 25 8.996094 25 11.46875 L 25 20.53125 C 25 23.003906 23.003906 25 20.53125 25 L 11.46875 25 C 8.996094 25 7 23.003906 7 20.53125 L 7 11.46875 C 7 8.996094 8.996094 7 11.46875 7 Z M 21.90625 9.1875 C 21.402344 9.1875 21 9.589844 21 10.09375 C 21 10.597656 21.402344 11 21.90625 11 C 22.410156 11 22.8125 10.597656 22.8125 10.09375 C 22.8125 9.589844 22.410156 9.1875 21.90625 9.1875 Z M 16 10 C 12.699219 10 10 12.699219 10 16 C 10 19.300781 12.699219 22 16 22 C 19.300781 22 22 19.300781 22 16 C 22 12.699219 19.300781 10 16 10 Z M 16 12 C 18.222656 12 20 13.777344 20 16 C 20 18.222656 18.222656 20 16 20 C 13.777344 20 12 18.222656 12 16 C 12 13.777344 13.777344 12 16 12 Z"/></svg>Instagram</h6>
+                <span class="text-secondary">{% if user.instagram %}{{user.instagram}}{% else %}-{% endif %}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">{{langTexts.usernameProfile}}</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{user.username}}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">{{langTexts.fullNameProfile}}</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">{{user.displayname}}</div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">{{langTexts.emailProfile}}</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">{{user.email}}</div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Website</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{user.website}}
+              </div>
+            </div>
+            <hr>
+            {% if user.uid == ownerUser.uid%}
+            <div class="row">
+              <div class="col-sm-12">
+                <a class="btn btn-primary route-link" target="__blank" data-href="edit-profile">{{langTexts.editProfile}}</a>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row gutters-sm">
+          <div class="col-sm-12 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h6 class="d-flex align-items-center mb-3 justify-content-center">{{langTexts.gameStatProfile}}</h6>
+                <div class="row g-0 align-items-center justify-content-center">
+                  <div class="col-7 cardwinrate mx-5 mb-3 mt-2">
+                    <div class="rating ratingwinrate">
+                      <h2 class="h2winrate"><span class ="counter" data-target="60" key="winrateProfile">...</span><sup>%</sup><br>{{langTexts.winrateProfile}}</h2>
+                      <div class="block"></div>
+                    </div>
+                  </div>
+                  <div class="col-5 ms-4 mb-2" id="statsText">
+                    <small key="playedCntProfile">{{langTexts.playedCntProfile1}}<i><span id="matchPlayedCnt">{{stats.totalMatchs}}</span></i>{{langTexts.playedCntProfile2}}</small>
+                    <hr>
+                    <small key="wonCntProfile">{{langTexts.wonCntProfile1}}<i><span id="matchWon">{{stats.totalWins}}</span></i>{{langTexts.wonCntProfile2}}</small>
+                    <hr>
+                    <small key="lostCntProfile">{{langTexts.loseCntProfile1}}<i><span id="matchLost">{{stats.totalLoses}}</span></i>{{langTexts.loseCntProfile2}}</small>
+                    <hr>
+                    <small key="minCntProfile">{{langTexts.minCntProfile1}}<i><span id="minutesMatch">{{stats.playTime}}</span></i>{{langTexts.minCntProfile2}}</small>
+                    <hr>
+                    <small key="scoredCntProfile">{{langTexts.scoredCntProfile1}}<i><span id="goalCnt">{{stats.totalGoal}}</span></i>{{langTexts.scoredCntProfile2}}</small>
+                  </div>
+                  <a class="btn btn-primary col-5 mt-2 route-link" data-href="matchs/{{user.username}}">Match History</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{
+    "defaultMode": "Select A Game Mode",
+    "classic": "Classic",
+    "powerups": "Powerups",
+    "boosted": "Boosted",
+    "createTournament": "Create Tournament",
+    "enterTournamentName": "Enter Tournament Name",
+    "joinATournament": "Join A Tournament",
+    "tableName": "Name",
+    "tableCreator": "Creator",
+	"tableMode": "Game Mode",
+	"tablePlayers": "Players",
+    "tableJoin": "Join"
+}

@@ -1,0 +1,107 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/editProfile.css' %}">
+
+{% include "navbar.html" with user=user urls=urls ownerUser=ownerUser%}
+<div class="container">
+	<div class="main-body">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card mb-3">
+					<div class="card-body">
+                        <form method="post" id="fileUploadArea" enctype="multipart/form-data">
+							{% csrf_token %}
+                            <div id="imageview" class="mb-3">
+                                <img class="rounded-circle object-fit-cover" src="{{user.imageLarge.url}}" alt="">
+                            </div>
+                            <input type="file" id="uploadfile" name="uploadfile" accept=".jpg, .jpeg, .png" style="display: none;"/>
+							<input class="btn btn-primary mt-2 px-4" type="button" value="{{langTexts.choosing_file}}" onclick="document.getElementById('uploadfile').click();" >
+							<input class="btn btn-success px-4 mt-3" id="saveAvatar" type="button" value="{{langTexts.avatar}}">
+                        </form>
+                    </div>
+				</div>
+			</div>
+			<div class="col-lg-8">
+				<div class="card">
+					<form id="editPForm" method="post" class="card-body">
+						{% csrf_token %}
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<h6 class="mb-0">{{langTexts.username}}</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<input type="text" name="username" class="form-control" value="{{user.username}}">
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<h6 class="mb-0">{{langTexts.fullName}}</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<input disabled type="text" name="displayname" class="form-control " value="{{user.displayname}}">
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<h6 class="mb-0">{{langTexts.email}}</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<input type="text" name="email" class="form-control" value="{{user.email}}" placeholder="example@example.com">
+							</div>
+						</div>
+                        <div class="row mb-3">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Website</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<input type="text" name="website" class="form-control" value="{{user.website}}" placeholder="www.example.com" >
+							</div>
+						</div>
+                        <div class="row mb-3">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Github</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<input type="text" name="github" class="form-control" value="{{user.github}}" placeholder="Github" >
+							</div>
+						</div>
+                        <div class="row mb-3">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Instagram</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<input type="text" name="instagram" class="form-control" value="{{user.instagram}}" placeholder="Instagram" >
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-3">
+								<h6 class="mb-0">X</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<input type="text" name="twitter" class="form-control" value="{{user.twitter}}" placeholder="X" >
+							</div>
+						</div>
+                        <div class="row mb-3">
+							<div class="col-sm-3">
+								<h6 class="mb-0">LinkedIn</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								<input type="text" name="linkedin" class="form-control" value="{{user.linkedin}}" placeholder="LinkedIn" >
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3"></div>
+							<div class="col-sm-9 text-secondary">
+								<input id="editPFormSubmit" type="button" class="btn btn-success px-4" value="Save Changes">
+								<a class="btn btn-danger route-link" target="__blank" data-href="profile">Cancel</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="dataPopup">
+
+</div>

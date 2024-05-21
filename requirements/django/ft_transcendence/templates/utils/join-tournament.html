@@ -1,0 +1,33 @@
+{% load static %}
+{% include "navbar.html" with user=user urls=urls ownerUser=ownerUser%}
+
+<div class="d-flex flex-column"> 
+  <div id="createTournament" class="d-flex flex-column gap-2">
+      <input id="tournamentName" class="form-control " type="text" name="name" id="tournamentName" placeholder="{{langTexts.enterTournamentName}}" autocomplete="off">
+      <select class="form-control" id="exampleFormControlSelect1">
+          <option value="empty">{{langTexts.defaultMode}}</option>
+          <option value="classic">{{langTexts.classic}}</option>
+          <option value="powerups">{{langTexts.powerups}}</option>
+          <option value="boosted">{{langTexts.boosted}}</option>
+        </select>
+      <button id="createTournamentBtn" class="btn btn-primary">{{langTexts.createTournament}}</button>
+  </div>
+  <hr>
+  <h3>{{langTexts.joinATournament}}</h3>
+  <div class="tableFixHead">
+    <table class="table table-striped w-100">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">{{langTexts.tableName}}</th>
+            <th scope="col">{{langTexts.tableCreator}}</th> 
+            <th scope="col">{{langTexts.tableMode}}</th>
+            <th scope="col">{{langTexts.tablePlayers}}</th>
+            <th scope="col">{{langTexts.tableJoin}}</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+  </div>
+</div>

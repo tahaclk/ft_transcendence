@@ -1,0 +1,70 @@
+{% load static %}
+{% include "navbar.html" with user=user urls=urls ownerUser=ownerUser%}
+<div class="container align-items-center">
+	<div class="mb-4 d-flex gap-2" id="chooseModes">
+		<select class="form-select" id="modes" name="modes">
+			<option value="classic" selected>{{langTexts.classic}}</option>
+			<option value="powerups">{{langTexts.powerups}}</option>
+			<option value="boosted">{{langTexts.boosted}}</option>
+		</select>
+		<button class="btn btn-primary" type="button" id="searchGame">{{langTexts.searchGame}}</button>
+	</div>
+	<h4 id="loading" class="d-none text-center mt-4">{{langTexts.searchingOpponent}}</h4>
+	<div id="_onGame" class="d-none">
+		<div id="onGame" class="flex-column gap-2 mx-auto">
+			<div class="d-flex justify-content-between mb-2">
+				<div id="player1" class="d-flex gap-2 align-items-center">
+					<img src="" style="width: 50px; height:50px;">
+					<h4 class="m-0"></h4>
+				</div>
+				<div id="player2" class="d-flex gap-2 align-items-center">
+					<img src="" style="width: 50px; height:50px;">
+					<h4 class="m-0"></h4>
+				</div>
+			</div>
+			<canvas id="game" class="m-0 p-0"></canvas>
+			<div class="d-flex justify-content-between">
+				<div id="surrender">
+					<button type="button" id="leftTheGameBtn" class="btn btn-danger">{{langTexts.surrender}}</button>
+					<div class="modal fade" id="surrenderModal" tabindex="-1" aria-labelledby="surrenderModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-body row justify-content-center align-items-baseline">
+									<h5 class="text-center">{{langTexts.areUSure}}</h5>
+									<div class="col-5">
+										<button type="button" class="btn btn-danger w-100" id="surrenderBtn" onclick="game.sendGameMessage('surrender', '');">{{langTexts.surrender}}</button>
+									</div>
+									<div class="col-5">
+										<button type="button" class="btn-close w-100" data-bs-dismiss="modal" aria-label="No"></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="music">
+					<audio id="gameMusic" src="{% static 'audio/Pong 2.0 Theme Song.mp3' %}" loop="loop"></audio>
+					<audio id="gameMusicWon" src="{% static 'audio/victory-trumpet.mp3' %}"></audio>
+					<audio id="gameMusicLose" src="{% static 'audio/gameover.wav' %}"></audio>
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#soundModal">
+						{{langTexts.soundLevel}}
+					</button>
+					<div class="modal fade" id="soundModal" tabindex="-1" aria-labelledby="soundModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-body row">
+									<div class="col-10">
+										<label for="volumeRange" class="form-label">Ses Seviyesi:</label>
+										<input type="range" class="form-range" id="volumeRange" min="0" max="20" value="4" oninput="document.getElementById('gameMusic').volume = this.value / 100.0">
+									</div>
+									<button type="button" class="btn-close col m-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

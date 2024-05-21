@@ -1,0 +1,15 @@
+{
+    "matchDetail": "Match Details",
+    "gamemode": "Gamemode:",
+    "classic": "Classic",
+    "powerups": "Powerups",
+    "boosted": "Boosted",
+    "ballTouched": "Touched The Ball ",
+    "ballTouchedAfter": " Times",
+    "catchedPowerUps": "Catched Powerups: ",
+    "longestRoundTime": "Longest Round: ",
+    "shortestRoundTime": "Shortest Round: ",
+    "seconds": "Seconds",
+    "second": " seconds",
+    "roundTimes": "Round Times"
+}

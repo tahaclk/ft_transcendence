@@ -1,0 +1,15 @@
+{
+    "matchDetail": "Spiel Details",
+    "gamemode": "Spielmodus:",
+    "classic": "Klassisch",
+    "powerups": "Power-Ups",
+    "boosted": "Verbessert",
+    "ballTouched": "Berührte Den Ball ",
+    "ballTouchedAfter": " Mal",
+    "catchedPowerUps": "Gefangene Power-Ups: ",
+    "longestRoundTime": "Längste Runde: ",
+    "shortestRoundTime": "Kürzeste Runde: ",
+    "seconds": "Sekunden",
+    "second": " sekunden",
+    "roundTimes": "Rundenzeiten"
+}

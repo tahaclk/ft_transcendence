@@ -1,0 +1,12 @@
+{
+    "developers" : "Developers",
+    "home" : "Home",
+    "about": "About",
+    "disable" : "Disabled",
+    "search" : "Search Users", 
+    "login" : "Register with 42 / Login",
+    "notification": "End of Notifications",
+    "profile" : "Profile",
+    "settings" : "Settings",
+    "logout" : "Logout"
+}

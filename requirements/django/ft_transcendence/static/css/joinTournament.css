@@ -1,0 +1,6 @@
+#createTournament input::placeholder{
+    font-style: italic !important;
+}
+.tableFixHead          { overflow: auto; height: 450px; }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+table  { border-collapse: collapse;}

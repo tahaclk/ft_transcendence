@@ -1,0 +1,50 @@
+#dataPopup{
+    display: none;
+    max-width: 250px;
+    width: 100%;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 6px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 2px 2px 10px grey;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.popupLine{
+    display: flex;
+}
+
+.popupLine div:nth-child(1){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.popupLine div:nth-child(1) i{
+	font-size: 100px;
+	color: #4caf50;
+	position: relative;
+	top: -50%;
+}
+
+.popupContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px;
+    height: 100%;
+	word-wrap: break-word;
+    align-items: center;
+    text-align: center;
+}
+
+.popupMessage{
+    width: 150px;
+    position: relative;
+    top: -28px;
+}

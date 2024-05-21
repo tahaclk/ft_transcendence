@@ -1,0 +1,150 @@
+.img-chat{
+    object-fit: cover;
+    max-width: 40px;
+    height: 40px;
+    width: 100%;
+    border: 2px solid white !important;
+    background: none;
+}
+.chat-box{
+    height: 400px;
+    position: fixed;
+    right: 0;
+    bottom: -348px;
+    transition: all 0.5s;
+    max-width: 400px;
+    min-width: 300px;
+    width: 100%;
+    border-top-left-radius: 8px;
+}
+.chat-box.opened{
+    bottom: 0px;
+    background-color: #212529 !important;
+}
+.chat-person{
+    border-right: 4px solid white;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.chat-profiles{
+    overflow: hidden !important;
+}
+/*
+.chat-profiles::-webkit-scrollbar{
+    width: 6px;
+}
+.chat-profiles::-webkit-scrollbar-track{
+    background: white;
+}
+.chat-profiles::-webkit-scrollbar-thumb {
+    background: #888;
+}
+.chat-profiles::-webkit-scrollbar-thumb:hover{
+    background: #555;
+} */
+.chat-person:hover{
+    background: rgb(93, 93, 251) !important;
+    background: rgb(92, 133, 246) !important;
+    cursor: pointer;
+}
+
+#chat-profile.in_sohbet{
+    cursor: pointer;
+}
+
+.chat-box-btn{
+    bottom: 7px;
+}
+
+#chatBtn{
+    position: relative;
+}
+
+.chat-item
+{
+  max-width: 180px;
+  width: 100%;
+  word-wrap: break-word;
+  border-radius: 3px;
+}
+
+.chat-container{
+    padding:20px;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.chat-container::-webkit-scrollbar{
+   width: 10px;
+   background-color: rgb(33, 37, 41);
+}
+.chat-container::-webkit-scrollbar-thumb{
+  background-color: rgb(112, 112, 112);
+  border-radius: 12px;
+}
+
+.chat-date-text{
+    font-size: 13px;
+    align-self: flex-end;
+}
+
+#chat-body{
+    width: 100%;
+    overflow: hidden;
+}
+
+#chat-title-img{
+    width: 35px;
+    height: 35px;
+}
+
+
+.extra-small-text{
+    font-size: 16px !important;
+}
+
+.micro-text{
+    font-size: 13px !important;
+}
+
+.normal{
+    left: 21px;
+}
+
+.anormal{
+    left: 0;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.online-stat-circle {
+    position: absolute;
+    transform: translateX(27px) translateY(27px);
+    width: 11px;
+    height: 11px;
+    border-radius: 100%;
+}
+
+.online-stat-circle.online,.inner-chat.online{
+    background-color: #00ff0a;
+}
+
+.online-stat-circle.offline,.inner-chat.offline{
+    background-color: crimson;
+}
+
+.inner-chat{
+    transform: translateX(24px) translateY(11px);
+}
+
+.fixed-right-menu{
+    position: fixed;
+    width: 250px;
+    top: 50%;
+    right: 10px;
+    border-radius: 6px;
+}

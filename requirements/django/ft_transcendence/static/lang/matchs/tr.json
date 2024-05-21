@@ -1,0 +1,15 @@
+{
+    "matchDetail": "Maç Detayı",
+    "gamemode": "Oyun Modu:",
+    "classic": "Klasik",
+    "powerups": "Güçlendirmeli",
+    "boosted": "Hızlandırmalı",
+    "ballTouched": "Topa ",
+    "ballTouchedAfter": " Kez Dokundu",
+    "catchedPowerUps": "Toplanan Güçlendiriciler: ",
+    "longestRoundTime": "En Uzun Round: ",
+    "shortestRoundTime": "En Kısa Round: ",
+    "seconds": "Saniye",
+    "second": " saniye",
+    "roundTimes": "Round Süreleri"
+}

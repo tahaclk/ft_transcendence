@@ -1,0 +1,51 @@
+{% load static %}
+{% include "navbar.html" with user=user urls=urls ownerUser=ownerUser%}
+{% load imagekit %}
+
+<div class="d-flex flex-wrap justify-content-around gap-3">
+{% for match in matchs %}
+<div class="card col-xl-5 col-lg-5 col-md-10 col-sm-12 match-card">
+    <h5 class="card-header {% if match.scoredGoals > match.concededGoals %}bg-success{% else %}bg-danger{% endif %} text-center text-light">{{match.timestamp}}</h5>
+    <div class="card-body d-flex flex-column align-items-center">
+        <div class="d-flex w-100 align-items-center mb-2">
+            <div class="d-flex justify-content-between align-items-start w-100 gap-2 px-2">
+                <div class="d-flex flex-column w-100 align-items-center text-center img-st f-1">
+                    <a class="route-link cursor-pointer text-decoration-none text-dark" data-href="user/{{match.user.username}}">
+                        <img src="{{match.user.imageSmall.url}}" class="p-1 object-fit-cover" alt="player">
+                        <h5 class="route-link" data-href="user/{{match.user.username}}">{{match.user.displayname}}<h5>
+                    </a>
+                </div>
+                <div class="d-flex flex-nowrap fs-4 w-100 justify-content-center mt-5 text-center f-1">
+                    <p>{{match.scoredGoals}} - {{match.concededGoals}}</p>
+                </div>
+                <div class="d-flex flex-column w-100 align-items-center text-center img-st f-1">
+                    <a class="route-link cursor-pointer text-decoration-none text-dark" data-href="user/{{match.enemy.username}}">
+                        <img src="{{match.enemy.imageSmall.url}}" class="p-1 object-fit-cover" alt="enemy">
+                        <h5>{{match.enemy.displayname}}<h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="w-100"><hr class="mt-1 p-0"></div>
+        <div class="d-flex w-100 justify-content-between align-items-baseline gap-5">
+            <div class="justify-content-start ms-2">{{langTexts.gamemode}} {% if match.gameMode == "classic" %}{{langTexts.classic}}{% elif match.gameMode == "powerups" %}{{langTexts.powerups}}{% elif match.gameMode == "boosted" %}{{langTexts.boosted}}{% endif %}</div>
+            <button class="btn btn-warning text-black dropdown-toggle me-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{forloop.counter0}}" aria-expanded="false" aria-controls="collapseExample" onclick="const options{{forloop.counter0}} = {series: [{name: '{{langTexts.seconds}}',data: [{{match.allRoundTimes|join:', '}}]}], chart: {zoom: {enabled: false},height: 350,type: 'line',},forecastDataPoints: {count: 0,fillOpacity: 0.5,strokeWidth: undefined,dashArray: 4,},stroke: {width: 5,curve: 'smooth'},xaxis: {type: 'category',categories: ['1.round', '2.round', '3.round', '4.round', '5.round'],tickAmount: 10,labels: {formatter: function(value) {return value;}}},title: {text: '{{langTexts.roundTimes}}',align: 'left',style: {fontFamily: 'pixelFont3',fontSize: '16px',color: '#666'}},fill: {type: 'gradient',gradient: {shade: 'dark',gradientToColors: [ '#FDD835'],shadeIntensity: 1,type: 'horizontal',opacityFrom: 1,opacityTo: 1,stops: [0, 100, 100, 100]},}};$('#chart{{forloop.counter0}}').html('');var chart = new ApexCharts(document.querySelector(`#chart{{forloop.counter0}}`), options{{forloop.counter0}});chart.render();">
+                {{langTexts.matchDetail}}
+            </button>
+        </div>
+        <div class="collapse w-100 mt-2" id="collapseExample{{forloop.counter0}}">
+            <div class="card card-body">
+                <div class="d-flex flex-column justify-self-center">
+                    <div id="chart{{forloop.counter0}}"></div>
+                    
+                    <div>{{langTexts.ballTouched}}{{match.ballTouched}}{{langTexts.ballTouchedAfter}}</div>
+                    {% if match.gameMode == "powerups" %}<div>{{langTexts.catchedPowerUps}}{{match.catchedPowerUps}}</div>{% endif %}
+                    <div>{{langTexts.longestRoundTime}}{{match.longestRoundTime}}{{langTexts.second}}</div>
+                    <div>{{langTexts.shortestRoundTime}}{{match.shortestRoundTime}}{{langTexts.second}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>

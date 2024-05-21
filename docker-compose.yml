@@ -1,0 +1,47 @@
+version: '3'
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  postgresql_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/tcelik/data/postgresql
+      o: bind
+  django_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/tcelik/data/django
+      o: bind
+
+services:
+  django:
+    container_name: django
+    build: ./requirements/django
+    ports:
+      - "8000:8000"
+      - "3000:3000"
+      - "8080:8080"
+    depends_on:
+      - postgres
+    volumes:
+      - django_data:/home/tcelik/django/medias
+    networks:
+      - default
+    restart: always
+  postgres:
+    container_name: postgresql
+    build: ./requirements/postgresql
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - default
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    restart: always

@@ -1,0 +1,19 @@
+<div class="d-flex flex-column bg-primary p-3 chat-box">
+    <div class="position-relative chat-box-btn d-flex">
+		<div id="chat-bar" class="d-flex align-items-center justify-content-between w-50">
+			<div id="chat-title-area" class="text-white p-0">
+				<i id="go-back" class="d-none align-self-center fas fa-chevron-left btn btn-primary"></i>
+				<div data-href="" id="chat-profile" class="d-flex gap-2 align-items-center route-link" data-person-uid="">
+					<img class="rounded-circle d-none" id="chat-title-img" src="" alt="">
+					<div class="inner-chat online-stat-circle d-none"></div>
+					<h5 class="mb-0" id="chat-title">{{langTexts.chatText}}</h5>
+				</div>
+			</div>
+			<button id="chatBtn" class="normal btn btn-primary">
+				<i class="fa-solid fa-chevron-up text-white"></i>
+			</button>
+		</div>
+    </div>
+    <div id="chat-body" class="d-flex gap-3 flex-column overflow-scroll chat-profiles">
+    </div>
+</div>

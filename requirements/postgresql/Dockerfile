@@ -1,0 +1,9 @@
+FROM postgres:16
+
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD 2003postgres
+ENV POSTGRES_DB postgres
+
+EXPOSE 5432
+
+CMD ["postgres"]

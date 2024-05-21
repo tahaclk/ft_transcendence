@@ -1,0 +1,14 @@
+{
+    "defaultMode": "Wähle einen Spielmodus",
+    "classic": "Klassisch",
+    "powerups": "Power-Ups",
+    "boosted": "Verbessert",
+    "createTournament": "Turnier erstellen",
+    "enterTournamentName": "Turniername eingeben",
+    "joinATournament": "An einem Turnier teilnehmen",
+    "tableName": "Name",
+    "tableCreator": "Ersteller",
+	"tableMode": "Spielmodus",
+	"tablePlayers": "Spieler",
+    "tableJoin": "Beitreten"
+}

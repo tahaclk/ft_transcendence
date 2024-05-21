@@ -1,0 +1,71 @@
+body{
+	padding-top: 90px;
+}
+@font-face {
+	font-family: 'pixelFont';
+	src: url('../font/test2.woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'pixelFont2';
+	src: url('../font/joystix.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'pixelFont3';
+	src: url('../font/6809-chargen.sixeightzeronine-regular.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face{
+	font-family: "regular5x3";
+	src: url("../font/small_5x3.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+*{
+	font-family: "pixelFont3";
+	letter-spacing: 1px;
+}
+
+
+.nav-link:hover{
+	color: white;
+}
+.card-img{
+	border-radius: 0 !important;
+}
+.btn.btn-skew {
+	-webkit-transform: skew(-15deg);
+	transform: skew(-15deg);
+}
+.fixed-shadow
+{
+	box-shadow: 0px 0px 10px 5px rgba(100, 100, 100, .5);
+}
+.login-register
+{
+
+}
+
+.ocean_shadow{
+	text-shadow: 1px 1px 10px aqua;
+}
+
+#circleNotf{
+	border-radius: 100% !important;
+    background: white;
+    border: 1px solid crimson !important;
+    position: absolute;
+    width: 10px !important;
+    height: 10px !important;
+    z-index: 1 !important;
+    top: 50% !important;
+	right: calc(50% - 7px);
+}
