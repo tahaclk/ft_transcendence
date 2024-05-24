@@ -4,5 +4,6 @@
     "fullName" : "Ad Soyad",
     "email" : "E-posta",
     "avatar" : "Avatarı Güncelle",
-    "cancel" : "İptal Et"
+    "cancel" : "İptal Et",
+    "saveChanges": "Save Changes"
 }

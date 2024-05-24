@@ -1,0 +1,32 @@
+#createTournament input::placeholder{
+    font-style: italic !important;
+}
+.tableFixHead          { overflow: auto; height: 250px; }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+table  { border-collapse: collapse;}
+
+.t-match-elem-outer{
+    height: 190px;
+}
+
+.t-elem{
+    border-bottom: 2px solid white;
+}
+
+.t-body{
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.t-match-p {
+    width: 120px !important;
+}
+
+.img-tourn{
+    object-fit: cover;
+    max-width: 60px;
+    height: 56px;
+    width: 100%;
+    border: 2px solid white !important;
+    background: none;
+}

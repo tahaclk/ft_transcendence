@@ -145,6 +145,7 @@ class Search
 	}
 
 	putRequestList(frq){		
+		let gameRequestList = frq.games;
 		let tournamentRequestList = frq.tournaments;
 		console.log("turnuva istekleri \n");
 		console.log(tournamentRequestList);
@@ -158,14 +159,21 @@ class Search
 		<li><span class='dropdown-item disabled micro-text'>${text}</span></li><div>`);
 		friendRequestList.forEach(friendShipRequest => {
 			if ($(`#notificationsDropdown li.notification-item[data-fr-uid=${friendShipRequest.from_uid}]`).length == 0){
+				console.log("GİRDİM AMK NOLDU HEEEE");
 				console.log(friendShipRequest.from_uid.toString());
 				this.friendShipNotification(friendShipRequest);
 			}
 		});
 		tournamentRequestList.forEach(tournamentRequest => {
 			if ($(`#notificationsDropdown li.notification-item[data-tr-uid=${tournamentRequest.tournamentId}]`).length == 0){
+				console.log("GİRDİM AMK NOLDU HEEEE2");
 				console.log(tournamentRequest.inviter_uid.toString());
 				chat.addInviteNotification(tournamentRequest);
+			}
+		});
+		gameRequestList.forEach(gameRequest => {
+			if ($(`#notificationsDropdown li.notification-item[data-gfr-uid=${gameRequest.from_uid}]`).length == 0){
+				chat.addGameInviteNotification(gameRequest);
 			}
 		});
 	}

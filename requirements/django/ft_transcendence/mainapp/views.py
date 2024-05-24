@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponseForbidden
 from django.core.exceptions import PermissionDenied
 from oAuthApp.views import apiRegisterUser
 from django.shortcuts import render, redirect, get_object_or_404
-from userManageApp.models import Game, UserManage, Token, MatchStats
+from userManageApp.models import Game, UserManage, Token, MatchStats, Tournament
 from django.db.models import F, Sum, Q
 from viewApi.views import blockFriendStatus
 from mainapp.language import getLangTexts
@@ -70,6 +70,13 @@ def index(request, direct="", dir=""):
 			for match_stats in match_stats_objects:
 				stats["playTime"] += sum(match_stats.allRoundTimes)
 			stats["playTime"] = '{0:.2f}'.format(stats["playTime"] / 60000.0)
+		tournament_history = None
+		if direct == "tournament-history":
+			try:
+				user = UserManage.objects.get(uid=sessionValue)
+				tournament_history = Tournament.objects.filter(Q(p1=user) | Q(p2=user) | Q(p3=user) | Q(p4=user)).order_by('-id')
+			except:
+				pass
 		response = render(request, "index.html", {
 			"blockStatus": bs,
 			"friendshipStatus": fs,
@@ -79,13 +86,21 @@ def index(request, direct="", dir=""):
 			"urls": {"REDIRECT_URI": REDIRECT_URI, "URL": SITE_URL},
 			"langTexts": langTexts,
 			"matchs": matchs,
-			"stats": stats
+			"stats": stats,
+			"tournaments": tournament_history
 		})
 		response.set_cookie("language", language, max_age=31536000, secure=True)
 		response.set_cookie("token", Token.objects.get(uid=sessionValue).generate_token(), secure=True)
 		return response
-	if direct in unsecurePaths:
-		return HttpResponseForbidden()
+
+	if direct in unsecurePaths or dir == "user" or dir == "matchs":
+		return render(request, "index.html", {
+			"ownerUser": None,
+			"user": None,
+			"direct": "utils/accessDenied",
+			"urls": {"REDIRECT_URI" : REDIRECT_URI, "URL": SITE_URL},
+			"langTexts": langTexts
+		})
 	response = render(request, "index.html", {
 		"ownerUser": None,
 		"user": None,

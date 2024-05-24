@@ -11,25 +11,29 @@ volumes:
       type: none
       device: /home/tcelik/data/postgresql
       o: bind
-  django_data:
+  medias:
     driver: local
     driver_opts:
       type: none
-      device: /home/tcelik/data/django
+      device: /home/tcelik/data/medias
+      o: bind
+  static:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/tcelik/data/static
       o: bind
 
 services:
   django:
     container_name: django
     build: ./requirements/django
-    ports:
-      - "8000:8000"
-      - "3000:3000"
-      - "8080:8080"
     depends_on:
       - postgres
+      - nginx
     volumes:
-      - django_data:/home/tcelik/django/medias
+      - medias:/vol/medias
+      - static:/vol/static
     networks:
       - default
     restart: always
@@ -45,3 +49,18 @@ services:
     ports:
       - "5432:5432"
     restart: always
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    ports:
+      - "443:443"
+      - "80:80"
+      - "3000:3000"
+    volumes:
+      - medias:/vol/medias
+      - static:/vol/static
+    restart: always
+    env_file:
+      - requirements/nginx/.env
+    networks:
+      - default

@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^*(*^7&e%6zvs-jc$dolzwg=s@z(70pgly!97+1bl55j$h6h$c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
 	"0.0.0.0",
@@ -43,14 +43,13 @@ ALLOWED_HOSTS = [
 	ALLOWED_HOST,
 ]
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # Application definition
 
 INSTALLED_APPS = [
 	'channels',
 	'daphne',
-    'sslserver',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,6 +71,7 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -156,18 +156,15 @@ USE_TZ = False
 
 TIME_ZONE = 'UTC'
 
-
+CSRF_TRUSTED_ORIGINS = ["https://" + ALLOWED_HOST, "https://" + ALLOWED_HOST]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_ROOT = '/vol/static/'
+STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'medias')
+MEDIA_ROOT = '/vol/medias/'
 MEDIA_URL = '/medias/'
 
 # Default primary key field type

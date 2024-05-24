@@ -146,6 +146,9 @@ Router.prototype = {
 								case "matchs":
 									matchs = undefined;
 									break;
+								case "tournament-history":
+									tournamentHistory = undefined;
+									break;
 								case "user":
 									profile = undefined;
 									break;
@@ -170,6 +173,9 @@ Router.prototype = {
 								case "game":
 									game = new Game();
 									break;
+								case "tournament-history":
+									tournamentHistory = new TournamentHistory();
+									break;
 								case route.htmlName.startsWith('matchs') ? route.htmlName : '':
 									matchs = new Matchs();
 									break;
@@ -187,29 +193,6 @@ Router.prototype = {
 						}
 					});
 				}
-				/* if (htmlName == this.lasthtmlName && htmlName == "matchs"){
-					if ($('script[src="/static/js/matchs.js"]').length)
-						$('script[src="/static/js/matchs.js"]').remove();
-				}
-				if (htmlName == "edit-profile"){
-					if (!$('script[src="/static/js/editProfile.js"]').length)
-						$('script[src="/static/js/route.js"]').before('<script src="/static/js/editProfile.js"></script>');
-					$('head').append('<link rel="stylesheet" href="/static/css/dataPopup.css">');
-					$('head').append('<link rel="stylesheet" href="/static/css/editProfile.css">');
-					editProfileReload();
-				}else if (htmlName == "profile" || htmlName.startsWith("user/")){
-					$('head').append('<link rel="stylesheet" href="/static/css/dataPopup.css">');
-					$('head').append('<link rel="stylesheet" href="/static/css/winrate.css">');
-					if (!$('script[src="/static/js/profile.js"]').length)
-						$('script[src="/static/js/route.js"]').before('<script src="/static/js/profile.js"></script>');
-					else
-						calcWinRate();
-				}
-				else if (htmlName == "matchs"){
-					$('head').append('<link rel="stylesheet" href="/static/css/matchs.css">');
-					if (!$('script[src="/static/js/matchs.js"]').length)
-						$('script[src="/static/js/router.js"]').after('<script src="/static/js/matchs.js"></script>');
- 				} */
 				if (htmlName == "game")
 					$("#main-container").removeClass("container");
 				else

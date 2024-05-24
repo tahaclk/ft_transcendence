@@ -1,0 +1,86 @@
+.jumbotron {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+.jumbotron h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+.list-group-item {
+    background-color: #e9ecef;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+}
+.list-group-item:hover {
+    background-color: #ced4da;
+}
+.spinner-border {
+    display: none;
+}
+.fade-in {
+    animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.border-right {
+    border-right: 1px solid #dee2e6;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.t-match-elem-outer{
+    /*height: 190px;*/
+}
+
+.t-elem{
+    /*border-bottom: 2px solid white;*/
+}
+
+.t-body{
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.t-match-p {
+    width: 120px !important;
+}
+
+.img-tourn{
+    object-fit: cover;
+    max-width: 60px;
+    height: 56px;
+    width: 100%;
+    background: none;
+}
+
+.order-1{
+    height: 85px;
+}
+
+.order-2{
+    height: 65px;
+}
+
+.order-3{
+    height: 45px;
+}
+
+.order-4{
+    height: 25px;
+}
+
+.oy-hidden{
+    overflow-y: hidden !important;
+}

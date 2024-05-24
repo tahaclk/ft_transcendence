@@ -6,6 +6,8 @@
 	"createTournament": "Turnuva Oluştur",
 	"enterTournamentName": "Turnuva Adını Girin",
 	"joinATournament": "Bir Turnuvaya Katılın",
+	"joinedTournament": "Katıldığınız Turnuva",
+	"notJoinedTournament": "Katıldığınız bir turnuva yok!",
 	"tableName": "İsim",
 	"tableCreator": "Oluşturucu",
 	"tableMode": "Oyun Modu",

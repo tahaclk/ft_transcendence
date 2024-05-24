@@ -418,7 +418,7 @@ class Game{
 					if (!this.won && this.score1 < PongGame.WINNING_SCORE && this.score2 < PongGame.WINNING_SCORE && this.wait == false && (game.gameSocket && game.gameSocket.readyState == WebSocket.OPEN)){
 						requestAnimationFrame(loop);
 					}else if (this.wait == true){
-						console.log("wait");
+						console.log("ANAN ANAN YANİ");
 					}else if (game.gameSocket && game.gameSocket.readyState == WebSocket.OPEN){
 						game.gameSocket.close(1000);
 						game.gameSocket = undefined;

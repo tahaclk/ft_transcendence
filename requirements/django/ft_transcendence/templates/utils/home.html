@@ -10,8 +10,10 @@
 				<h5 class="card-title">PONG 2.0</h5>
 				<p class="card-text">{{langTexts.homeLine1}}</p>
 				<p class="card-text">{{langTexts.homeLine2}}</p>
+				{% if ownerUser %}
 				<a id="quickMatch" data-href="game" class="btn btn-success btn-skew p-2 mx-auto w-50 route-link mb-2">{{langTexts.quickMatchHome}}</a>
 				<a id="joinTournament" data-href="join-tournament" class="btn btn-warning btn-skew p-2 mx-auto w-50 route-link">{{langTexts.joinTournament}}</a>
+				{% endif %}
 			</div>
 		</div>
 	</div>

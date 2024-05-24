@@ -14,20 +14,24 @@
   </div>
   <hr>
   <h3>{{langTexts.joinATournament}}</h3>
-  <div class="tableFixHead">
+  <div class="tableFixHead border mb-2">
     <table class="table table-striped w-100">
         <thead>
-            <tr>
+          <tr>
             <th scope="col">#</th>
             <th scope="col">{{langTexts.tableName}}</th>
-            <th scope="col">{{langTexts.tableCreator}}</th> 
             <th scope="col">{{langTexts.tableMode}}</th>
+            <th scope="col">{{langTexts.tableCreator}}</th> 
             <th scope="col">{{langTexts.tablePlayers}}</th>
             <th scope="col">{{langTexts.tableJoin}}</th>
-            </tr>
+          </tr>
         </thead>
         <tbody id="tableBody">
         </tbody>
     </table>
+  </div>
+  <h3>{{langTexts.joinedTournament}}</h3>
+  <div class="d-flex flex-column gap-2 t-container">
+    <h5 class="text-muted text-center m-5">{{langTexts.notJoinedTournament}}</h5>
   </div>
 </div>

@@ -22,5 +22,7 @@
     "friendReq" : "Friend Request",
     "msg" : "Message",
     "block" : "Block",
-    "unblock" : "Unblock"
+    "unblock" : "Unblock",
+    "matchHistory": "Match History",
+    "tournamentHistory": "Tournament History"
 }

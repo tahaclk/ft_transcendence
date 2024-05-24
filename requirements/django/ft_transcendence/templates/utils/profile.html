@@ -121,7 +121,6 @@
                   <div class="col-7 cardwinrate mx-5 mb-3 mt-2">
                     <div class="rating ratingwinrate">
                       <h2 class="h2winrate"><span class ="counter" data-target="60" key="winrateProfile">...</span><sup>%</sup><br>{{langTexts.winrateProfile}}</h2>
-                      <div class="block"></div>
                     </div>
                   </div>
                   <div class="col-5 ms-4 mb-2" id="statsText">
@@ -135,7 +134,10 @@
                     <hr>
                     <small key="scoredCntProfile">{{langTexts.scoredCntProfile1}}<i><span id="goalCnt">{{stats.totalGoal}}</span></i>{{langTexts.scoredCntProfile2}}</small>
                   </div>
-                  <a class="btn btn-primary col-5 mt-2 route-link" data-href="matchs/{{user.username}}">Match History</a>
+                  <a class="btn btn-primary col-5 mt-2 route-link me-2" data-href="matchs/{{user.username}}">{{langTexts.matchHistory}}</a>
+                  {% if user.uid == ownerUser.uid %}
+                    <a class="btn btn-primary col-5 mt-2 route-link" data-href="tournament-history">{{langTexts.tournamentHistory}}</a>
+                  {% endif %}
                 </div>
               </div>
             </div>

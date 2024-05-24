@@ -1,2 +1,28 @@
 {% load static %}
 {% include "navbar.html" with user=user urls=urls ownerUser=ownerUser%}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">{{langTexts.tournamentHistory}}</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6 border-right">
+            <ul class="list-group" id="tournament-list">
+                {% for tournament in tournaments %}
+                    <li class="list-group-item tournament-link" data-id="{{ tournament.id }}" data-name="{{ tournament.name }}">
+                        {{ tournament.name }}
+                        <div class="tournament-details">
+                            <h5 class="text-warning">{{ tournament.timestamp }}</h5>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <div id="tournament-detail" class="p-3">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">{{langTexts.loading}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

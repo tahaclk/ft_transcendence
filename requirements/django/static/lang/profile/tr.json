@@ -22,5 +22,7 @@
     "friendReq" : "Arkadaşlık İsteği",
     "msg" : "Mesaj",
     "block" : "Engelle",
-    "unblock" : "Engeli kaldır"
+    "unblock" : "Engeli kaldır",
+    "matchHistory": "Maç Geçmişi",
+    "tournamentHistory": "Turnuva Geçmişi"
 }

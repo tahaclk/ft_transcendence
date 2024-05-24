@@ -4,5 +4,6 @@
     "fullName" : "Full Name", 
     "email" : "E-mail",
     "avatar" : "Update Avatar",
-    "cancel" : "Cancel"
+    "cancel" : "Cancel",
+    "saveChanges": "Save Changes"
 }

@@ -22,5 +22,7 @@
     "friendReq": "Freundschaftsanfrage",
     "msg": "Nachricht",
     "block": "Blockieren",
-    "unblock": "Blockierung aufheben"
+    "unblock": "Blockierung aufheben",
+    "matchHistory": "Spielverlauf",
+    "tournamentHistory": "Turnierverlauf"
 }

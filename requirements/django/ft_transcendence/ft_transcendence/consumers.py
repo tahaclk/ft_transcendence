@@ -1,9 +1,9 @@
 from channels.generic.websocket import WebsocketConsumer
-from userManageApp.models import Token, UserManage, Message, Friendship, FriendshipRequest, BlockList, Game, Tournament, TournamentInvite
+from userManageApp.models import Token, UserManage, Message, Friendship, FriendshipRequest, BlockList, Game, Tournament, TournamentInvite, GameInvite
 from django.db.models import Q
 from django.db import models
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 from threading import Timer
 from ft_transcendence.tournamentConsumers import TournamentConsumer
@@ -112,10 +112,21 @@ class ChatConsumer(WebsocketConsumer):
 						"invited_displayname": user.displayname
 					}
 					tournaments.append(tmp)
+				gameInvites = []
+				gameInvite = GameInvite.objects.filter(invited=user)
+				for gi in gameInvite:
+					tmp = {
+						"from_uid": gi.inviter.uid,
+						"from_username": gi.inviter.username,
+						"from_displayname": gi.inviter.displayname,
+						"from_thumbnail": gi.inviter.thumbnail.url
+					}
+					gameInvites.append(tmp)
 				self.send(text_data=json.dumps({
 					'friendRequestList': {
 						"users": users,
-						"tournaments": tournaments
+						"tournaments": tournaments,
+						"games": gameInvites
 					}
 				}))
 
@@ -512,6 +523,91 @@ class ChatConsumer(WebsocketConsumer):
 							}))
 				except Exception as e:
 					print(f"An error occurred: {e}")
+			case "match-invite":
+				try:
+					to_uid = textData["message"]["to"]
+					userId = None
+					for e in connected_users:
+						if e["socket"] == self:
+							userId = e["user_uid"]
+					user = UserManage.objects.get(uid=userId)
+					to_user = UserManage.objects.get(uid=to_uid)
+					if BlockList.isBlocked(user, to_user):
+						return
+					if textData["message"]["gamemode"] not in ["classic", "powerups", "boosted"]:
+						return
+					gameMode = textData["message"]["gamemode"]
+					invite = GameInvite.objects.filter(inviter=user, invited=to_user)
+					if invite.exists():
+						return
+					invite = GameInvite.objects.create(inviter=user, invited=to_user, gamemode=gameMode)
+					invite.save()
+					for e in connected_users:
+						if e["user_uid"] == to_uid:
+							e["socket"].send(text_data=json.dumps({
+								"matchInvite": {
+									"from_uid": user.uid,
+									"from_username": user.username,
+									"from_displayname": user.displayname,
+									"from_thumbnail": user.thumbnail.url
+								}
+							}))
+				except Exception as e:
+					print(e)
+				pass
+			case "gameAccept":
+				try:
+					from_uid = textData["message"]["from_uid"]
+					from_user = UserManage.objects.get(uid=from_uid)
+					userId = None
+					for e in connected_users:
+						if e["socket"] == self:
+							userId = e["user_uid"]
+					user = UserManage.objects.get(uid=userId)
+					invite = GameInvite.objects.filter(inviter=from_user, invited=user)
+					if invite.exists():
+						game = Game(player1=from_user, player2=user, mode=invite[0].gamemode, status=Game.INGAME, startGameTimestamp=datetime.now() + timedelta(seconds=20))
+						invite.delete()
+						game.save()
+						for e in connected_users:
+							if e["user_uid"] == str(from_user.uid):
+								e["socket"].send(text_data=json.dumps({
+									"nextMatch": {
+										"p1_uid": game.player1.uid,
+										"p1_username": game.player1.username,
+										"p1_thumbnail": game.player1.thumbnail.url,
+										"p2_uid": game.player2.uid,
+										"p2_username": game.player2.username,
+										"p2_thumbnail": game.player2.thumbnail.url
+									}
+								}))
+								self.send(text_data=json.dumps({
+									"nextMatch": {
+										"p1_uid": game.player1.uid,
+										"p1_username": game.player1.username,
+										"p1_thumbnail": game.player1.thumbnail.url,
+										"p2_uid": game.player2.uid,
+										"p2_username": game.player2.username,
+										"p2_thumbnail": game.player2.thumbnail.url
+									}
+								}))
+							
+				except Exception as e:
+					print(e)
+			case "gameReject":
+				try:
+					from_uid = textData["message"]["from_uid"]
+					from_user = UserManage.objects.get(uid=from_uid)
+					userId = None
+					for e in connected_users:
+						if e["socket"] == self:
+							userId = e["user_uid"]
+					user = UserManage.objects.get(uid=userId)
+					invite = GameInvite.objects.filter(inviter=from_user, invited=user)
+					if invite.exists():
+						invite.delete() 
+				except Exception as e:
+					print(e)
 
 				
 				

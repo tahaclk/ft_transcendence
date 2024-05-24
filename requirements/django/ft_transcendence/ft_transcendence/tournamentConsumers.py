@@ -32,7 +32,7 @@ class TournamentConsumer(WebsocketConsumer):
 		text_data_json = json.loads(text_data)
 		match text_data_json["mode"]:
 			case "getActiveTournaments":
-				self.get_active_tournaments()
+				self.get_active_tournaments(text_data_json)
 			case "create-tournament":
 				self.createTournament(text_data_json)
 			case "close-tournament":
@@ -47,7 +47,7 @@ class TournamentConsumer(WebsocketConsumer):
 	def send_message(self, message):
 		self.send(text_data=json.dumps(message))
 
-	def get_active_tournaments(self):
+	def get_active_tournaments(self, text_data=None):
 		actives = Tournament.objects.filter(status=Tournament.SEARCHINGPLAYERS)
 		objs = []
 		for active in actives:
@@ -65,6 +65,45 @@ class TournamentConsumer(WebsocketConsumer):
 				"joinedUids": [a.uid for a in [active.p1, active.p2, active.p3, active.p4] if a is not None]
 			})
 		self.send_message({"mode": "getActiveTournaments", "message": objs})
+		try:
+			token = Token.objects.get(token=text_data["token"])
+			user = UserManage.objects.get(uid=token.uid)
+			joined = Tournament.objects.filter(status=Tournament.INPROGRESS).filter(Q(p1=user) | Q(p2=user) | Q(p3=user) | Q(p4=user))
+			if joined.exists():
+				joined = joined[0]
+				self.send_message({"mode": "joinedTournament", "message": {
+					"id": joined.id,
+					"name": joined.name,
+					"gamemode": joined.mode,
+					"timestamp": str(joined.timestamp.strftime("%m/%d/%Y, %H:%M:%S")),
+					"creatorThumbnail": joined.creator.thumbnail.url,
+					"creatorDisplayName": joined.creator.displayname,
+					"creatorUsername": joined.creator.username,
+					"creatorUid": joined.creator.uid,
+					"p1_username": joined.p1.username if joined.p1 else None,
+					"p2_username": joined.p2.username if joined.p2 else None,
+					"p3_username": joined.p3.username if joined.p3 else None,
+					"p4_username": joined.p4.username if joined.p4 else None,
+					"p1_displayname": joined.p1.displayname if joined.p1 else None,
+					"p2_displayname": joined.p2.displayname if joined.p2 else None,
+					"p3_displayname": joined.p3.displayname if joined.p3 else None,
+					"p4_displayname": joined.p4.displayname if joined.p4 else None,
+					"p1_thumbnail": joined.p1.thumbnail.url if joined.p1 else None,
+					"p2_thumbnail": joined.p2.thumbnail.url if joined.p2 else None,
+					"p3_thumbnail": joined.p3.thumbnail.url if joined.p3 else None,
+					"p4_thumbnail": joined.p4.thumbnail.url if joined.p4 else None,
+					"semiMatch1_p1": joined.semiMatch1.player1.username if joined.semiMatch1 else None,
+					"semiMatch1_p2": joined.semiMatch1.player2.username if joined.semiMatch1 else None,
+					"semiMatch2_p1": joined.semiMatch2.player1.username if joined.semiMatch2 else None,
+					"semiMatch2_p2": joined.semiMatch2.player2.username if joined.semiMatch2 else None,
+					"thirdPlaceMatch_p1": joined.thirdPlaceMatch.player1.username if joined.thirdPlaceMatch else None,
+					"thirdPlaceMatch_p2": joined.thirdPlaceMatch.player2.username if joined.thirdPlaceMatch else None,
+					"finalMatch_p1": joined.finalMatch.player1.username if joined.finalMatch else None,
+					"finalMatch_p2": joined.finalMatch.player2.username if joined.finalMatch else None,
+				}})
+		except Exception as e:
+			print(e)
+			return
 
 	def tournament_backend(self, event):
 		print("LETSGOOOOOO")
@@ -72,7 +111,10 @@ class TournamentConsumer(WebsocketConsumer):
 		message = event['message']
 		if not self.disconnected:
 			print("GONDDERRRDİMMM")
-			self.get_active_tournaments()
+			self.send(text_data=json.dumps({
+				'mode': "requestGetActiveTournaments",
+				'message': "true"
+			}))
 		else:
 			print("Message not sent because user disconnected")
 
@@ -108,12 +150,13 @@ class TournamentConsumer(WebsocketConsumer):
 		user = UserManage.objects.get(uid=token.uid)
 		try:
 			tid = int(message["tournamentID"])
+			print("SATIR 153")
 			t = Tournament.objects.get(id=tid)
 			if t and t.creator == user:
-				t.delete()
 				ti = TournamentInvite.objects.filter(tournament=t)
 				if ti.exists():
 					ti.delete()
+				t.delete()
 				self.tournamentSendUpdates()
 		except:
 			print("uid de bir ibnelik var ya yok yada sayı değil")
@@ -165,10 +208,7 @@ class TournamentConsumer(WebsocketConsumer):
 		async_to_sync(self.channel_layer.group_send)("tournament",
 		{
 			"type": "tournament.backend",
-			"message":
-			{
-				"runF": "get_active_tournaments"
-			}
+			"message": ""
 		})
 
 	def leaveTournament(self, text_data):

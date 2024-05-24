@@ -281,12 +281,12 @@ class Tournament(models.Model):
 		tmp.remove(user1)
 		user2 = tmp[random.randint(0, 2)]
 		tmp.remove(user2)
-		self.semiMatch1 = Game(player1=user1, player2=user2, mode=self.mode, status=Game.INGAME, startGameTimestamp=datetime.now() + timedelta(seconds=15))
+		self.semiMatch1 = Game(player1=user1, player2=user2, mode=self.mode, status=Game.INGAME, startGameTimestamp=datetime.now() + timedelta(seconds=45))
 		self.semiMatch1.save()
 		user1 = tmp[random.randint(0, 1)]
 		tmp.remove(user1)
 		user2 = tmp[0]
-		self.semiMatch2 = Game(player1=user1, player2=user2, mode=self.mode, status=Game.INGAME, startGameTimestamp=datetime.now() + timedelta(seconds=15))
+		self.semiMatch2 = Game(player1=user1, player2=user2, mode=self.mode, status=Game.INGAME, startGameTimestamp=datetime.now() + timedelta(seconds=45))
 		self.semiMatch2.save()
 		self.save()
 
@@ -371,4 +371,10 @@ class TournamentInvite(models.Model):
 	tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name='tournament_invites')
 	inviter = models.ForeignKey(UserManage, on_delete=models.CASCADE, related_name='tournament_inviter')
 	invited = models.ForeignKey(UserManage, on_delete=models.CASCADE, related_name='tournament_invited')
+	timestamp = models.DateTimeField(auto_now_add=True)
+
+class GameInvite(models.Model):
+	inviter = models.ForeignKey(UserManage, on_delete=models.CASCADE, related_name='game_inviter')
+	invited = models.ForeignKey(UserManage, on_delete=models.CASCADE, related_name='game_invited')
+	gamemode = models.TextField(default="classic")
 	timestamp = models.DateTimeField(auto_now_add=True)

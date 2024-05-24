@@ -43,8 +43,6 @@ class Profile{
 				"popUpError2": "Anfrage bereits gesendet!"
 			}
 		};
-
-
 		function friendReq(e){
 			let uid = $("input[name='person-uid']").val();
 			let csrf =$("#profile_datas input[name='csrfmiddlewaretoken']").val();
@@ -255,9 +253,8 @@ class Profile{
 	calcWinRate(){
 		const rating = document.getElementsByClassName('rating')[0];
 		const block = document.getElementsByClassName('block');
-
-		for (var i = 1; i < 100; i++){
-			rating.innerHTML += "<div class='block'></div>";
+		for (var i = 0; i < 100; i++){
+			rating.innerHTML += "<div class='block orosbu'></div>";
 			block[i].style.transform = "rotate(" + 3.6 * i + "deg)";
 			block[i].style.animationDelay = `${i/40}s`;
 		}
@@ -265,7 +262,10 @@ class Profile{
 		if (isNaN(realDataTarget)){
 			realDataTarget = 0;
 		}
+
 		const lines = document.querySelectorAll(`.card .rating .block:nth-child(-n+${parseInt(realDataTarget) + 1})`);
+		if (realDataTarget > 0)
+			document.querySelectorAll(`.card .rating .block:not([style])`).forEach(e => e.remove());
 		lines.forEach(line => {
 			line.classList.add('bg-primary');
 			line.style.boxShadow = "0 0 15px #0d6efd,0 0 30px #0d6efd";
@@ -285,15 +285,5 @@ class Profile{
 			}
 		}
 		numberCounter();
-		//var nbr = 13;
-		//var wonCnt = 8;
-		//var loseCnt = 5;
-		//var minutesAll = 5295;
-		//var scoreCnt = 374;
-		//$("#matchPlayedCnt").html(nbr);
-		//$("#matchWon").html(wonCnt);
-		//$("#matchLost").html(loseCnt);
-		//$("#minutesMatch").html(minutesAll);
-		//$("#goalCnt").html(scoreCnt);
 	}
 }

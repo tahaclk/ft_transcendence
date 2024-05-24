@@ -23,6 +23,8 @@
 		<link rel="stylesheet" href="{% static 'css/matchs.css' %}">
 	{%elif direct == "utils/join-tournament" %}
 		<link rel="stylesheet" href="{% static 'css/joinTournament.css' %}">
+	{% elif direct == "utils/tournament-history" %}
+		<link rel="stylesheet" href="{% static 'css/tournamentHistory.css' %}">
 	{% endif %}
 		<script src="{% static 'js/jQuery.js' %}"></script>
 </head>
@@ -30,25 +32,9 @@
 	{% csrf_token %}
 	<div class="bg-light w-100">
 		<div id="main-container" class="{% if direct != "utils/game" %}container{% endif %} mt-4">
-
-
-			<!--
-				<nav class="container navbar navbar-expand-lg navbar-light bg-light">
-					<a class="navbar-brand" href="#">
-						<img src="{% static 'img/42_Logo.svg' %}" alt="" height="60" width="80" class="d-inline-block align-center"/>
-						<span style="font-size: x-large;">PONG 2.0</span>
-					</a>
-					<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-						<ul class="navbar-nav">
-							<li class="nav-item">
-								<button class="btn btn-primary"><a class="nav-link text-white" href="https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-73fae2f30b790d3a7f318474e2871d23c312dd3a6bff7387548b9e3a9ea1e306&redirect_uri=https%3A%2F%2Fvalid-burro-vigorously.ngrok-free.app%2FgetUserInfo&response_type=code">42 ile Kaydol / Giriş Yap</a></button>
-							</li>
-						</ul>
-					</div>
-				</nav> -->
 			<div id="app">
 				{% if direct != "utils/" %}
-					{% include direct|add:".html" with user=user urls=urls ownerUser=ownerUser blockStatus=blockStatus friendStatus=friendStatus langTexts=langTexts matchs=matchs%}
+					{% include direct|add:".html" with user=user urls=urls ownerUser=ownerUser blockStatus=blockStatus friendStatus=friendStatus langTexts=langTexts matchs=matchs tournaments=tournaments%}
 				{% endif %}
 			</div>
 			<div id="chat">
@@ -72,11 +58,6 @@
 		</div>
 	</div>
 	<div id="urlObject" data-href="{% if direct %}/viewApi/{{ direct|slice:"6:" }}{% endif %}"></div>
-	<!-- <div class="container">
-		<h1>Hello World!</h1>
-		<button id="loginBtn" class="btn btn-primary">Login</button>
-		<button id="test" class="btn btn-primary"><a class="text-white" href="https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-73fae2f30b790d3a7f318474e2871d23c312dd3a6bff7387548b9e3a9ea1e306&redirect_uri=https%3A%2F%2Fvalid-burro-vigorously.ngrok-free.app%2FgetUserInfo&response_type=code">Button</a></button>
-	</div> -->
 	<script>
 		const siteUrl = "{{urls.URL}}";
 		{% if user %}
@@ -91,6 +72,7 @@
 	<script src="{% static 'js/profile.js' %}"></script>
 	<script src="{% static 'js/editProfile.js' %}"></script>
 	<script src="{% static 'js/joinTournament.js' %}"></script>
+	<script src="{% static 'js/tournamentHistory.js' %}"></script>
 	{% endif %}
 	<script src="{% static 'js/route.js' %}"></script>
 	<script src="{% static 'js/router.js' %}"></script>
@@ -107,6 +89,8 @@
 		editProfile = new EditProfile();
 	{% elif user and direct == "utils/matchs" %}
 		matchs = new Matchs();
+	{% elif user and direct == "utils/tournament-history" %}
+		tournamentHistory = new TournamentHistory();
 	{% endif %}
 	</script>
 </body>

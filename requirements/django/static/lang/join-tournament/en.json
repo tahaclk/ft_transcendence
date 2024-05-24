@@ -6,6 +6,8 @@
     "createTournament": "Create Tournament",
     "enterTournamentName": "Enter Tournament Name",
     "joinATournament": "Join A Tournament",
+    "joinedTournament": "Joined Tournament",
+    "notJoinedTournament": "You are not joined a Tournament!",
     "tableName": "Name",
     "tableCreator": "Creator",
 	"tableMode": "Game Mode",

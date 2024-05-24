@@ -10,7 +10,10 @@ class Chat{
 				"block" : "Block",
 				"msg" : "Message",
 				"unblock" : "Unblock",
-				"invite": "Invite"
+				"invite": "Invite",
+				"classic": "Classic",
+				"powerups": "Powerups",
+				"boosted": "Boosted",
 			},
 			"tr":{
 				"accept" : "Kabul et",
@@ -21,7 +24,10 @@ class Chat{
 			    "block" : "Engelle",
 				"msg" : "Mesaj",
 			    "unblock" : "Engeli kaldır",
-				"invite": "Davet Et"
+				"invite": "Davet Et",
+				"classic": "Klasik",
+				"powerups": "Güçlendirmeli",
+				"boosted": "Hızlanmalı"
 			},
 			"de":{
 				"accept": "Akzeptieren",
@@ -32,7 +38,10 @@ class Chat{
 				"block": "Blockieren",
 				"msg": "Nachricht",
 				"unblock": "Blockierung aufheben",
-				"invite": "Einladen"
+				"invite": "Einladen",
+				"classic": "Klassisch",
+				"powerups": "Power-Ups",
+				"boosted": "Verbessert",
 			}
 		};
 
@@ -84,8 +93,12 @@ class Chat{
 					jointournament.sendMessage("getActiveTournaments","");
 			}
 			else if (message.nextMatch){
+				console.log("nextMATCH GİRİYOM LA")
 				this.createPopUp(message.nextMatch);
-			} 
+			}
+			else if (message.matchInvite){
+				this.addGameInviteNotification(message.matchInvite)
+			}
 			//console.log('Received message:', message);
 		};
 
@@ -145,6 +158,52 @@ class Chat{
 		});
 	}
 
+	addGameInviteNotification(gameInvite, playSound = false){
+		if ($(`#notificationsDropdown li.notification-item[data-gfr-uid=${gameInvite.from_uid}]`).length > 0)
+			return;
+		var yeniLi = $("<li>").addClass("d-flex flex-column gap-1 bg-light p-1 pe-auto notification-item");
+		yeniLi.attr("data-gfr-uid", `${gameInvite.from_uid}`);
+	
+	
+		var innerDiv1 = $("<div>").addClass("d-flex gap-1 justify-content-evenly align-items-center micro-text lh-base");
+		var innerDiv2 = $("<div>").addClass("d-flex gap-1 justify-content-evenly");
+	
+	
+		var resim = $("<img>").addClass("rounded-circle img-chat ms-2").attr("src", `${gameInvite.from_thumbnail}`).attr("alt", "profil_resmi");
+		var isimSpan = $("<span>").text(`${gameInvite.from_displayname}`);
+	
+	
+		var kabulButon = $("<button>").addClass("btn btn-success p-1").attr("type", "button").text(this.langText[chat.getCookie("language")]["accept"]);
+		var reddetButon = $("<button>").addClass("btn btn-danger p-1").attr("type", "button").text(this.langText[chat.getCookie("language")]["decline"]);
+	
+		innerDiv1.append(resim, isimSpan);
+		innerDiv2.append(kabulButon, reddetButon);
+	
+		yeniLi.append(innerDiv1, innerDiv2);
+	
+		//Buton event listenerları
+		kabulButon.on("click", ()=>{
+			console.log("TURNUva isteğini kabul ediyom");
+			$(kabulButon).closest("li").remove();
+			chat.sendMessage("gameAccept", {"from_uid": gameInvite.from_uid});
+		});
+	
+		reddetButon.on("click", ()=>{
+			console.log("TURNUva isteğini reddediyom");
+			$(reddetButon).closest("li").remove();
+			chat.sendMessage("gameReject", {"from_uid": gameInvite.from_uid});
+		});
+		console.log("heeeeeey");
+		console.log(gameInvite);
+		console.log($("#notificationsDropdown li:last-child"));
+		console.log(yeniLi);
+		yeniLi.insertBefore($("#endofnotifications"));
+		if (playSound){
+			chat.playNotification();
+			$("#circleNotf").addClass("bg-danger");
+		}
+	}
+
 	semiMatchsFinished(tid){
 		this.sendMessage("getTournamentMatchsEveryone", {"tournamentId": tid});
 	}
@@ -181,7 +240,7 @@ class Chat{
 				</div>
 			</div>
 			<div>
-				<button id='popUpRouter' class='btn btn-warning'><a data-href='game' class='text-decoration-none route-link'>Go To Match!</a></button>
+				<button id='popUpRouter' data-href='game'  class='btn btn-warning text-decoration-none route-link'>Go To Match!</button>
 			</div>
 		</div>
 		`;
@@ -281,11 +340,13 @@ class Chat{
 	
 		//Buton event listenerları
 		kabulButon.on("click", ()=>{
+			console.log("TURNUva isteğini kabul ediyom");
 			$(kabulButon).closest("li").remove();
 			chat.sendMessage("tournamentAccept", {"tournamentId": youAreInvited.tournamentId});
 		});
 	
 		reddetButon.on("click", ()=>{
+			console.log("TURNUva isteğini reddediyom");
 			$(reddetButon).closest("li").remove();
 			chat.sendMessage("tournamentReject", {"tournamentId": youAreInvited.tournamentId});
 		});
@@ -385,9 +446,19 @@ class Chat{
 		$("#chat-body").toggleClass("gap-3 overflow-scroll chat-profiles bg-dark");
 		$("#chat-body").empty().append(
 			$("<div>").attr("id", "chat-area").addClass("chat-container d-flex flex-column gap-3 text-white"),
-			$("<div>").addClass("input-group p-2").append(
-				$("<input>").attr({ "id": "msg-content", "class": "form-control shadow-none", "placeholder": "Type a message", "type": "text", "autocomplete": "off" }),
-				$("<button>").attr({ "id": "btn-send", "class": "btn btn-outline-secondary", "type": "button" }).append($("<i>").addClass("fa-regular fa-paper-plane"))
+			$("<div>").addClass("d-flex align-items-center").append(
+				$("<div>").addClass("input-group p-2").append(
+					$("<input>").attr({ "id": "msg-content", "class": "form-control shadow-none", "placeholder": "Type a message", "type": "text", "autocomplete": "off" }),
+					$("<button>").attr({ "id": "btn-send", "class": "btn btn-outline-secondary", "type": "button" }).append($("<i>").addClass("fa-regular fa-paper-plane"))
+				),
+				$("<div id='invite-container'>").addClass("py-2 btn-group dropup").append(
+					$("<button dropdown-toggle>").attr({ "id": "btn-invite-send", "class": "btn btn-outline-secondary", "type": "button", "data-bs-toggle":"dropdown"}).append($("<i>").addClass("fa-solid fa-gamepad")),
+					$("<ul>").addClass("dropdown-menu").append(
+						$("<li>").attr("data-gameInviteMode", "classic").append($("<a>").addClass("dropdown-item").text(chat.langText[chat.getCookie("language")].classic)),
+						$("<li>").attr("data-gameInviteMode", "powerups").append($("<a>").addClass("dropdown-item").text(chat.langText[chat.getCookie("language")].powerups)),
+						$("<li>").attr("data-gameInviteMode", "boosted").append($("<a>").addClass("dropdown-item").text(chat.langText[chat.getCookie("language")].boosted))
+					)
+				)
 			)
 		);
 	
@@ -437,11 +508,19 @@ class Chat{
 			let to_uid = $("#chat-profile").attr("data-person-uid");
 			let content = $("#msg-content").val();
 			if (content.trim() != ""){
-				this.sendMessage("send-message", {"to": to_uid, "content": content});
+				chat.sendMessage("send-message", {"to": to_uid, "content": content});
 				$("#msg-content").val("");
 			}
 		});
-	
+
+		$("#invite-container a").click((e)=>{
+			let to_uid = $("#chat-profile").attr("data-person-uid");
+			let gamemode = "classic";
+			if (e.target.closest("li").getAttribute("data-gameInviteMode") != undefined)
+				gamemode = e.target.closest("li").getAttribute("data-gameInviteMode");
+			this.sendMessage("match-invite", {"to": to_uid, "gamemode": gamemode});
+		});
+		
 		$("#msg-content").keypress(function(event){
 			var keycode = (event.keyCode ? event.keyCode : event.which);
 			let content = $("#msg-content").val();
