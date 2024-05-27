@@ -583,7 +583,7 @@ class LocalGame{
 					this.context.textAlign = "center";
 					this.context.fillText(`${PongGame.WINNER_NAME} wins!`, this.canvasWidth / 2, this.canvasHeight / 2);
 
-					$("#leftTheGameBtn").text(["Geri", "Back", "Zurück"][["tr", "en", "de"].indexOf(chat.getCookie("language"))]);
+					$("#leftTheGameBtn").text(["Geri", "Back", "Zurück"][["tr", "en", "de"].indexOf(localGame.getCookie("language"))]);
 				});
 				PongGame.gameReady = false;
 			}
@@ -608,16 +608,16 @@ class LocalGame{
 			if (this.matchs.finalMatch.score1 != 0 || this.matchs.finalMatch.score2 != 0)
 				;
 			else if (this.matchs.thirdPlaceMatch.score1 != 0 || this.matchs.thirdPlaceMatch.score2 != 0)
-				this.createFrontend({"p1": this.matchs.finalMatch.player1, "p2": this.matchs.finalMatch.player2, "matchText": ["Final Maç", "Final Match", "Finale"][["tr", "en", "de"].indexOf(chat.getCookie("language"))]});
+				this.createFrontend({"p1": this.matchs.finalMatch.player1, "p2": this.matchs.finalMatch.player2, "matchText": ["Final Maç", "Final Match", "Finale"][["tr", "en", "de"].indexOf(localGame.getCookie("language"))]});
 			else if (this.matchs.match2.score1 != 0 || this.matchs.match2.score2 != 0){
 				this.matchs.finalMatch.player1 = this.matchs.match1.score1 > this.matchs.match1.score2 ? this.matchs.match1.player1 : this.matchs.match1.player2;
 				this.matchs.finalMatch.player2 = this.matchs.match2.score1 > this.matchs.match2.score2 ? this.matchs.match2.player1 : this.matchs.match2.player2;
 				this.matchs.thirdPlaceMatch.player1 = this.matchs.match1.score1 < this.matchs.match1.score2 ? this.matchs.match1.player1 : this.matchs.match1.player2;
 				this.matchs.thirdPlaceMatch.player2 = this.matchs.match2.score1 < this.matchs.match2.score2 ? this.matchs.match2.player1 : this.matchs.match2.player2;
-				this.createFrontend({"p1": this.matchs.thirdPlaceMatch.player1, "p2": this.matchs.thirdPlaceMatch.player2, "matchText": ["Üçüncülük Maçı", "Third Place Match", "Spiel um den dritten Platz"][["tr", "en", "de"].indexOf(chat.getCookie("language"))]});
+				this.createFrontend({"p1": this.matchs.thirdPlaceMatch.player1, "p2": this.matchs.thirdPlaceMatch.player2, "matchText": ["Üçüncülük Maçı", "Third Place Match", "Spiel um den dritten Platz"][["tr", "en", "de"].indexOf(localGame.getCookie("language"))]});
 			}
 			else if (this.matchs.match1.score1 != 0 || this.matchs.match1.score2 != 0)
-				this.createFrontend({"p1": this.matchs.match2.player1, "p2": this.matchs.match2.player2, "matchText": ["Maç 2", "Match 2", "Spiel 2"][["tr", "en", "de"].indexOf(chat.getCookie("language"))]});
+				this.createFrontend({"p1": this.matchs.match2.player1, "p2": this.matchs.match2.player2, "matchText": ["Maç 2", "Match 2", "Spiel 2"][["tr", "en", "de"].indexOf(localGame.getCookie("language"))]});
 			$("#nextMatchBtn").toggleClass("d-none");
 		});
 		$("#onlyMatch").on("click", ()=>{
@@ -659,7 +659,7 @@ class LocalGame{
 				this.players.player3 = player3;
 				this.players.player4 = player4;
 				this.matchMaker();
-				this.createFrontend({"p1": this.matchs.match1.player1, "p2": this.matchs.match1.player2, "matchText": ["Maç 1", "Match 1", "Spiel 1"][["tr", "en", "de"].indexOf(chat.getCookie("language"))]});
+				this.createFrontend({"p1": this.matchs.match1.player1, "p2": this.matchs.match1.player2, "matchText": ["Maç 1", "Match 1", "Spiel 1"][["tr", "en", "de"].indexOf(localGame.getCookie("language"))]});
 			}
 		});
 	}
@@ -668,10 +668,10 @@ class LocalGame{
 		console.log(order);
 		$("#tournamentOrderModal .modal-body").html("");
         $("#tournamentOrderModal .modal-body").append(
-            $("<div>").append($("<h4>").text(["Kazanan : ", "Winner: ", "Gewinner: "][["tr", "en", "de"].indexOf(chat.getCookie("language"))] + order[0])),
-            $("<div>").append($("<h4>").text(["İkinci  : ", "Second: ", "Zweite  : "][["tr", "en", "de"].indexOf(chat.getCookie("language"))] + order[1])),
-            $("<div>").append($("<h4>").text(["Üçüncü  : ", "Third : ", "Dritte  : "][["tr", "en", "de"].indexOf(chat.getCookie("language"))] + order[2])),
-            $("<div>").append($("<h4>").text(["Dördüncü: ", "Fourth: ", "Vierte  : "][["tr", "en", "de"].indexOf(chat.getCookie("language"))] + order[3])),
+            $("<div>").append($("<h4>").text(["Kazanan : ", "Winner: ", "Gewinner: "][["tr", "en", "de"].indexOf(localGame.getCookie("language"))] + order[0])),
+            $("<div>").append($("<h4>").text(["İkinci  : ", "Second: ", "Zweite  : "][["tr", "en", "de"].indexOf(localGame.getCookie("language"))] + order[1])),
+            $("<div>").append($("<h4>").text(["Üçüncü  : ", "Third : ", "Dritte  : "][["tr", "en", "de"].indexOf(localGame.getCookie("language"))] + order[2])),
+            $("<div>").append($("<h4>").text(["Dördüncü: ", "Fourth: ", "Vierte  : "][["tr", "en", "de"].indexOf(localGame.getCookie("language"))] + order[3])),
         );
     }
 
@@ -758,6 +758,20 @@ class LocalGame{
 			this.pong.resize(gameWidth);
 		});
 		this.pong.Counter();
+	}
+
+	getCookie(cname) {
+		let name = cname + "=";
+		let decodedCookie = decodeURIComponent(document.cookie);
+		let ca = decodedCookie.split(';');
+		for(let i = 0; i <ca.length; i++) {
+			let c = ca[i];
+			while (c.charAt(0) == ' ')
+				c = c.substring(1);
+			if (c.indexOf(name) == 0)
+				return c.substring(name.length, c.length);
+		}
+		return "";
 	}
 }
 /********************************************************LocalGame JS***********************************************************************/
