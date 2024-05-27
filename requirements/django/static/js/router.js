@@ -152,6 +152,9 @@ Router.prototype = {
 								case "user":
 									profile = undefined;
 									break;
+								case "local-game":
+									localGame = undefined;
+									break;
 							}
 
 							route.cssFileArr.forEach(file =>{
@@ -181,6 +184,9 @@ Router.prototype = {
 									break;
 								case route.htmlName.startsWith('user') ? route.htmlName : '':
 									profile = new Profile();
+									break;
+								case "local-game":
+									localGame = new LocalGame();
 									break;
 							}
 							route.cssFileArr.forEach(file =>{

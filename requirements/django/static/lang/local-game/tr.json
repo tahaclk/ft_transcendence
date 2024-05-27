@@ -1,0 +1,23 @@
+{
+	"classic": "Klasik",
+	"powerups": "Güçlendirmeli",
+	"boosted": "Hızlanmalı",
+	"searchGame": "Oyun Ara",
+	"searchingOpponent": "Rakip Aranıyor",
+	"surrender": "Teslim Ol",
+	"back": "Geri",
+	"close": "Kapat",
+	"soundLevel": "Ses Seviyesi",
+	"areUSure": "Emin misiniz?",
+	"nextMatch": "Sonraki Maç",
+	"playMatch": "Maç Yap",
+	"player1": "Oyuncu 1",
+	"player2": "Oyuncu 2",
+	"player3": "Oyuncu 3",
+	"player4": "Oyuncu 4",
+	"createTournament": "Turnuva Oluştur",
+	"playTournament": "Turnuva Başlat",
+	"showOrder": "Sıralamayı Göster",
+	"tournamentOrder": "Turnuva Sıralaması",
+	"username": "Kullanıcı Adı"
+}

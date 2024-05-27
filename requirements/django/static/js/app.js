@@ -13,7 +13,8 @@
 			new Route('game', 'game', false, ["game"], []),
 			new Route('matchs/', 'matchs', false, ["matchs"], ["matchs"]),
 			new Route('join-tournament', 'join-tournament', false, ["joinTournament"], ["joinTournament"]),
-			new Route('tournament-history', 'tournament-history', false, ["tournamentHistory"], ["tournamentHistory"])
+			new Route('tournament-history', 'tournament-history', false, ["tournamentHistory"], ["tournamentHistory"]),
+			new Route('local-game', 'local-game', false, ["localGame"], [])
 		]);
 		function updateContent(page){
 			console.log("updateContent:" + page);
@@ -62,5 +63,6 @@ let matchs = undefined;
 let profile = undefined;
 let editProfile = undefined;
 let jointournament = undefined;
-let tournamentHistory = undefined; 
+let tournamentHistory = undefined;
+let localGame = undefined;
 /*Optional */

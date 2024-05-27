@@ -74,6 +74,7 @@
 	<script src="{% static 'js/joinTournament.js' %}"></script>
 	<script src="{% static 'js/tournamentHistory.js' %}"></script>
 	{% endif %}
+	<script src="{% static 'js/localGame.js' %}"></script>
 	<script src="{% static 'js/route.js' %}"></script>
 	<script src="{% static 'js/router.js' %}"></script>
 	<script src="{% static 'js/app.js' %}"></script>
@@ -91,6 +92,8 @@
 		matchs = new Matchs();
 	{% elif user and direct == "utils/tournament-history" %}
 		tournamentHistory = new TournamentHistory();
+	{% elif user and direct == "utils/local-game" %}
+		localGame = new LocalGame();
 	{% endif %}
 	</script>
 </body>

@@ -1,0 +1,23 @@
+{
+    "classic": "Classic",
+    "powerups": "Powerups",
+    "boosted": "Boosted",
+    "searchGame": "Search Game",
+    "searchingOpponent": "Searching Opponent",
+	"surrender": "Surrender",
+	"back": "Back",
+    "close": "Close",
+	"soundLevel": "Sound Level",
+    "areUSure": "Are you sure?",
+	"nextMatch": "Next Match",
+	"playMatch": "Play Match",
+	"player1": "Player 1",
+	"player2": "Player 2",
+	"player3": "Player 3",
+	"player4": "Player 4",
+	"createTournament": "Create Tournament",
+	"playTournament": "Play Tournament",
+	"showOrder": "Show Order",
+	"tournamentOrder": "Tournament Order",
+	"username": "Username"
+}

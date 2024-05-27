@@ -42,9 +42,12 @@ def apiRegisterUser(request):
 		access_token = response.json().get("access_token")
 	else:
 		print("Token alınamadı. Hata kodu:", response.status_code)
+		return None
 	print("Token: " + access_token)
 	print("Code:" + code)
 	cursus_data = fetch_data("/v2/me", access_token)
+	if cursus_data is None:
+		return None
 	user = None
 	print(dumps(cursus_data))
 	if (userExist(user_id=cursus_data['id']) == False):

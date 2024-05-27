@@ -164,18 +164,15 @@ class Chat{
 		var yeniLi = $("<li>").addClass("d-flex flex-column gap-1 bg-light p-1 pe-auto notification-item");
 		yeniLi.attr("data-gfr-uid", `${gameInvite.from_uid}`);
 	
-	
 		var innerDiv1 = $("<div>").addClass("d-flex gap-1 justify-content-evenly align-items-center micro-text lh-base");
 		var innerDiv2 = $("<div>").addClass("d-flex gap-1 justify-content-evenly");
 	
-	
 		var resim = $("<img>").addClass("rounded-circle img-chat ms-2").attr("src", `${gameInvite.from_thumbnail}`).attr("alt", "profil_resmi");
 		var isimSpan = $("<span>").text(`${gameInvite.from_displayname}`);
-	
-	
+
 		var kabulButon = $("<button>").addClass("btn btn-success p-1").attr("type", "button").text(this.langText[chat.getCookie("language")]["accept"]);
 		var reddetButon = $("<button>").addClass("btn btn-danger p-1").attr("type", "button").text(this.langText[chat.getCookie("language")]["decline"]);
-	
+
 		innerDiv1.append(resim, isimSpan);
 		innerDiv2.append(kabulButon, reddetButon);
 	
@@ -185,13 +182,13 @@ class Chat{
 		kabulButon.on("click", ()=>{
 			console.log("TURNUva isteğini kabul ediyom");
 			$(kabulButon).closest("li").remove();
-			chat.sendMessage("gameAccept", {"from_uid": gameInvite.from_uid});
+			chat.sendMessage("gameAccept", {"from_uid": $(kabulButon).closest(`li.notification-item[data-gfr-uid]`).attr("data-gfr-uid")});
 		});
 	
 		reddetButon.on("click", ()=>{
 			console.log("TURNUva isteğini reddediyom");
 			$(reddetButon).closest("li").remove();
-			chat.sendMessage("gameReject", {"from_uid": gameInvite.from_uid});
+			chat.sendMessage("gameReject", {"from_uid": $(reddetButon).closest(`li.notification-item[data-gfr-uid]`).attr("data-gfr-uid")});
 		});
 		console.log("heeeeeey");
 		console.log(gameInvite);

@@ -3,7 +3,8 @@
     "homeLine2" : "Invite your friends and join the online Pong experience right away!",
     "quickMatchHome" : "Quick Match",
     "joinTournament": "Join Tournament",
-    "AItitleHome" : "Against Artifical Intellegence(AI)",
-    "commentHome" : "Lorem ipsum etc. etc.",
-    "showProfileHome" : "Show Profile"
+    "localquickMatchHome" : "Local Match",
+    "AItitleHome" : "Welcome!",
+    "commentHome" : "Get ready to rediscover the classic pong game with modern features. Compete with other players in real-time live matches, track your performance with match statistics, and experience thrilling moments in tournaments. Personalize by creating your own profile and start your journey to the top of the gaming world. A fun and competitive experience awaits you!",
+    "showProfileHome" : "Sign up now and start your pong adventure!"
 }

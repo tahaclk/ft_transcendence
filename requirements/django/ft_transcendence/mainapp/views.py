@@ -1,4 +1,4 @@
-from django.http import JsonResponse, HttpResponse, HttpResponseForbidden
+from django.http import JsonResponse, HttpResponse, HttpResponseForbidden, HttpResponseNotFound
 from django.core.exceptions import PermissionDenied
 from oAuthApp.views import apiRegisterUser
 from django.shortcuts import render, redirect, get_object_or_404
@@ -19,12 +19,19 @@ BASE_URL = env("SITE")
 SITE_URL = env("SITE_URL")
 REDIRECT_URI = env("REDIRECT_URI")
 
+publicPaths = [
+	"home",
+	"about",
+	"local-game"
+]
+
 unsecurePaths = [
 	"profile",
 	"edit-profile",
 	"game",
 	"matchs",
 	"join-tournament",
+	"tournament-history",
 ]
 
 def index(request, direct="", dir=""):
@@ -77,6 +84,8 @@ def index(request, direct="", dir=""):
 				tournament_history = Tournament.objects.filter(Q(p1=user) | Q(p2=user) | Q(p3=user) | Q(p4=user)).order_by('-id')
 			except:
 				pass
+		if direct not in (publicPaths + unsecurePaths) and direct != "":
+			return HttpResponseNotFound()
 		response = render(request, "index.html", {
 			"blockStatus": bs,
 			"friendshipStatus": fs,
@@ -94,20 +103,24 @@ def index(request, direct="", dir=""):
 		return response
 
 	if direct in unsecurePaths or dir == "user" or dir == "matchs":
-		return render(request, "index.html", {
+		response = render(request, "index.html", {
 			"ownerUser": None,
 			"user": None,
 			"direct": "utils/accessDenied",
 			"urls": {"REDIRECT_URI" : REDIRECT_URI, "URL": SITE_URL},
 			"langTexts": langTexts
 		})
-	response = render(request, "index.html", {
-		"ownerUser": None,
-		"user": None,
-		"direct": "utils/" + direct,
-		"urls": {"REDIRECT_URI" : REDIRECT_URI, "URL": SITE_URL},
-		"langTexts": langTexts
-	})
+	else:
+		if direct not in publicPaths and direct != "":
+			return HttpResponseNotFound()
+		else:
+			response = render(request, "index.html", {
+				"ownerUser": None,
+				"user": None,
+				"direct": "utils/" + direct,
+				"urls": {"REDIRECT_URI" : REDIRECT_URI, "URL": SITE_URL},
+				"langTexts": langTexts
+			})
 	response.set_cookie("language", language, max_age=31536000, secure=True)
 	return response
 

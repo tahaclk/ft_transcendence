@@ -539,7 +539,7 @@ class ChatConsumer(WebsocketConsumer):
 					gameMode = textData["message"]["gamemode"]
 					invite = GameInvite.objects.filter(inviter=user, invited=to_user)
 					if invite.exists():
-						return
+						invite.delete()
 					invite = GameInvite.objects.create(inviter=user, invited=to_user, gamemode=gameMode)
 					invite.save()
 					for e in connected_users:
@@ -568,6 +568,9 @@ class ChatConsumer(WebsocketConsumer):
 					if invite.exists():
 						game = Game(player1=from_user, player2=user, mode=invite[0].gamemode, status=Game.INGAME, startGameTimestamp=datetime.now() + timedelta(seconds=20))
 						invite.delete()
+						all_invites = GameInvite.objects.filter(invited=user)
+						if all_invites.exists():
+							all_invites.delete()
 						game.save()
 						for e in connected_users:
 							if e["user_uid"] == str(from_user.uid):

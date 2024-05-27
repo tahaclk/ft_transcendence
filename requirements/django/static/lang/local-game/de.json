@@ -1,0 +1,23 @@
+{
+    "classic": "Klassisch",
+    "powerups": "Power-Ups",
+    "boosted": "Verbessert",
+    "searchGame": "Spiel suchen",
+    "searchingOpponent": "Gegner wird gesucht",
+	"surrender": "Aufgeben",
+	"back": "Zurück",
+    "close": "Schließen",
+	"soundLevel": "Lautstärke",
+    "areUSure": "Bist du sicher?",
+    "nextMatch": "Nächstes Spiel",
+	"playMatch": "Spiel spielen",
+	"player1": "Spieler 1",
+	"player2": "Spieler 2",
+	"player3": "Spieler 3",
+	"player4": "Spieler 4",
+	"createTournament": "Turnier erstellen",
+	"playTournament": "Turnier spielen",
+	"showOrder": "Reihenfolge anzeigen",
+	"tournamentOrder": "Turnierreihenfolge",
+	"username": "Benutzername"
+}

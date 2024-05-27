@@ -169,7 +169,7 @@ class Ball:
 		self.y = self.original_y = y
 		self.radius = radius
 		self.x_vel = list([-1, 1])[random.randint(0,1)] * self.MAX_VEL
-		self.y_vel = 0.0 #En son burası random bir değerle doldurulacak
+		self.y_vel = random.uniform(-1.0, 1.0) * self.MAX_VEL
 
 	def move(self):
 		self.x = round(self.x + self.x_vel, 3)
@@ -179,7 +179,7 @@ class Ball:
 		self.x = self.original_x
 		self.y = self.original_y
 		self.x_vel = list([-1, 1])[random.randint(0,1)] * self.MAX_VEL
-		self.y_vel = 0 #En son 0 değerini değiştir
+		self.y_vel = random.uniform(-1.0, 1.0) * self.MAX_VEL
 
 class PongGame:
 	def __init__(self, startTime, room_name):
@@ -316,10 +316,10 @@ class PongGame:
 		elif self.powerUp.type == PowerUp.BIG_PADDLE:
 			if self.powerUp.borderColor == PowerUp.RED:
 				if self.lastTouchedPlayer == 1:
-					self.lastEffectedPlayer = 1
+					self.lastEffectedPlayer = 2
 					self.p2_paddle.height += 50
 				elif self.lastTouchedPlayer == 2:
-					self.lastEffectedPlayer = 2
+					self.lastEffectedPlayer = 1
 					self.p1_paddle.height += 50
 			elif self.powerUp.borderColor == PowerUp.GREEN:
 				if self.lastTouchedPlayer == 1:
@@ -334,7 +334,7 @@ class PongGame:
 					self.lastEffectedPlayer = 1
 					self.p1_paddle.height -= 50
 				elif self.lastTouchedPlayer == 2:
-					self.lastEffectedPlayer = 1
+					self.lastEffectedPlayer = 2
 					self.p2_paddle.height -= 50
 			elif self.powerUp.borderColor == PowerUp.GREEN:
 				if self.lastTouchedPlayer == 1:

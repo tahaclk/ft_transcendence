@@ -22,5 +22,12 @@ def getLangTexts(request, direct):
 			langTexts.update(navbarTexts)
 			langTexts.update(chatTexts)
 	except:
-		return {}, language
+		with open(base_path / 'static' / 'lang' / 'home' / f'{language}.json', 'r') as file:
+			with open(base_path / 'static' / 'lang' / 'navbar' / f'{language}.json', 'r') as navbar:
+				navbarTexts = jsonLoad(navbar)
+			with open(base_path / 'static' / 'lang' / 'chat' / f'{language}.json', 'r') as chat:
+				chatTexts = jsonLoad(chat)
+			langTexts = jsonLoad(file)
+			langTexts.update(navbarTexts)
+			langTexts.update(chatTexts)
 	return langTexts, language

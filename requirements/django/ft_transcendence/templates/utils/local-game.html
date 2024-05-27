@@ -1,0 +1,84 @@
+{% load static %}
+{% include "navbar.html" with user=user urls=urls ownerUser=ownerUser langTexts=langTexts%}
+
+<div class="col col-md-12 mx-auto">
+    <div id="selectGameInterface" class="d-flex flex-wrap justify-content-around">
+    <div class="pb-3">
+        <h4 class="d-flex justify-content-center mb-4">{{langTexts.playMatch}}</h4>
+        <select class="form-select" id="modes1" name="modes">
+			<option value="classic" selected>{{langTexts.classic}}</option>
+			<option value="powerups">{{langTexts.powerups}}</option>
+			<option value="boosted">{{langTexts.boosted}}</option>
+		</select>
+        <div class="input-group my-3 mx-auto w-100 justify-content-center">
+            <span class="input-group-text" id="basic-addon1">{{langTexts.player1}}</span>
+            <input type="text" id="player1Name" class="form-control" placeholder="{{langTexts.username}}" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group my-3 mx-auto w-100 justify-content-center">
+            <span class="input-group-text" id="basic-addon2">{{langTexts.player2}}</span>
+            <input type="text" id="player2Name" class="form-control" placeholder="{{langTexts.username}}" aria-label="Username" aria-describedby="basic-addon2">
+        </div>
+        <button id="onlyMatch" class="d-flex justify-content-center btn btn-primary mx-auto">{{langTexts.playMatch}}</button>
+    </div>
+    <div>
+        <h4 class="d-flex justify-content-center mb-4">{{langTexts.playTournament}}</h4>
+        <select class="form-select" id="modes2" name="modes">
+			<option value="classic" selected>{{langTexts.classic}}</option>
+			<option value="powerups">{{langTexts.powerups}}</option>
+			<option value="boosted">{{langTexts.boosted}}</option>
+		</select>
+        <div class="input-group my-3 mx-auto w-100 justify-content-center">
+            <span class="input-group-text" id="basic-addonT1">{{langTexts.player1}}</span>
+            <input type="text" id="playerT1Name" class="form-control" placeholder="{{langTexts.username}}" aria-label="Username" aria-describedby="basic-addonT1">
+        </div>
+        <div class="input-group my-3 mx-auto w-100 justify-content-center">
+            <span class="input-group-text" id="basic-addonT2">{{langTexts.player2}}</span>
+            <input type="text" id="playerT2Name" class="form-control" placeholder="{{langTexts.username}}" aria-label="Username" aria-describedby="basic-addonT2">
+        </div>
+        <div class="input-group my-3 mx-auto w-100 justify-content-center">
+            <span class="input-group-text" id="basic-addonT3">{{langTexts.player3}}</span>
+            <input type="text" id="playerT3Name" class="form-control" placeholder="{{langTexts.username}}" aria-label="Username" aria-describedby="basic-addonT3">
+        </div>
+        <div class="input-group my-3 mx-auto w-100 justify-content-center">
+            <span class="input-group-text" id="basic-addonT4">{{langTexts.player4}}</span>
+            <input type="text" id="playerT4Name" class="form-control" placeholder="{{langTexts.username}}" aria-label="Username" aria-describedby="basic-addonT4">
+        </div>
+        <button id="tournamentCreate" class="d-flex justify-content-center btn btn-primary mx-auto">{{langTexts.createTournament}}</button>
+    </div>
+</div>
+</div>
+<div id="onGame" class="d-none flex-column gap-2 mx-auto">
+    <div class="d-flex justify-content-between mb-2">
+        <div id="player1" class="d-flex gap-2 align-items-center">
+            <img class="rounded-circle" src="{% static 'img/default-pp.png' %}" style="width: 50px; height:50px;">
+            <h4 class="m-0" id="p1Username"></h4>
+        </div>
+        <div id="player2" class="d-flex gap-2 align-items-center">
+            <img class="rounded-circle" src="{% static 'img/default-pp.png' %}" style="width: 50px; height:50px;">
+            <h4 class="m-0" id="p2Username"></h4>
+        </div>
+    </div>
+    <canvas id="game" class="m-0 p-0"></canvas>
+    <div class="d-flex justify-content-between">
+        <button type="button" id="leftTheGameBtn" class="btn btn-danger">{{langTexts.back}}</button>
+        <h4 id="matchText" class="d-none"></h4>
+        <button type="button" id="nextMatchBtn" class="btn btn-success d-none">{{langTexts.nextMatch}}</button>
+        <button id="showOrderBtn" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#tournamentOrderModal">{{langTexts.showOrder}}</button>
+    </div>
+</div>
+<div class="modal fade" id="tournamentOrderModal" tabindex="-1" aria-labelledby="tournamentOrderModalTitle" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="tournamentOrderModalTitle">{{langTexts.tournamentOrder}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{langTexts.close}}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+{% load static %}
 {% include "navbar.html" with user=user urls=urls ownerUser=ownerUser%}
 {% load imagekit %}
 <div class="card" >
@@ -12,8 +13,9 @@
 				<p class="card-text">{{langTexts.homeLine2}}</p>
 				{% if ownerUser %}
 				<a id="quickMatch" data-href="game" class="btn btn-success btn-skew p-2 mx-auto w-50 route-link mb-2">{{langTexts.quickMatchHome}}</a>
-				<a id="joinTournament" data-href="join-tournament" class="btn btn-warning btn-skew p-2 mx-auto w-50 route-link">{{langTexts.joinTournament}}</a>
+				<a id="joinTournament" data-href="join-tournament" class="btn btn-warning btn-skew p-2 mx-auto w-50 route-link mb-2">{{langTexts.joinTournament}}</a>
 				{% endif %}
+				<a id="localquickMatch" data-href="local-game" class="btn btn-info btn-skew p-2 mx-auto w-50 route-link mb-2">{{langTexts.localquickMatchHome}}</a>
 			</div>
 		</div>
 	</div>
@@ -21,17 +23,17 @@
 
 <hr>
 
-<div class="card" >
+<div class="card mb-5" >
 	<div class="d-flex flex-wrap">
-		<div class="col-sm-5">
-			<div class="card-body">
+		<div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 my-auto">
+			<div class="card-body d-flex flex-column">
 				<h5 class="card-title">{{langTexts.AItitleHome}}</h5>
 				<p class="card-text">{{langTexts.commentHome}}</p>
-				<a href="#" class="btn btn-primary p-2">{{langTexts.showProfileHome}}</a>
+				<p class="card-text mt-2">{{langTexts.showProfileHome}}</p>
 			</div>
 		</div>
-		<div class="col-sm-7">
-			<img class="card-img" src="https://federalistathami.org/wp-content/uploads/2023/05/Artificial_Intelligence__AI__Machine_Learning_-_30212411048.jpg" alt="Suresh Dasari Card">
+		<div class="col-xl-7 col-lg-6 col-md-12 col-sm-12">
+			<img class="card-img w-100 h-100" src="{% static 'img/exampleProfile.png' %}" alt="Profile Example">
 		</div>
 	</div>
 </div>
