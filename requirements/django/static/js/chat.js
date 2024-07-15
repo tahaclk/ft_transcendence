@@ -123,13 +123,13 @@ class Chat{
 				if (chat.in_sohbet == 0)
 					chat.getFriendsRequest();
 			});
-		
+
 			$("#go-back").click((e) => {
 				$("#chat-body").toggleClass("gap-3 overflow-scroll chat-profiles bg-dark");
-		
+
 				$("#chat-profile").attr("data-person-uid", "");
 				$("#chat-profile").toggleClass("in_sohbet");
-		
+
 				if ($("#chat-profile .inner-chat").hasClass("online")){
 					$("#chat-profile .inner-chat").toggleClass("online");
 					$("#chat-profile .inner-chat").toggleClass("d-none");
@@ -138,17 +138,17 @@ class Chat{
 					$("#chat-profile .inner-chat").toggleClass("offline");
 					$("#chat-profile .inner-chat").toggleClass("d-none");
 				}
-		
-		
+
+
 				$("#chat-title-img").attr("src", "");
 				$("#chat-title-img").toggleClass("d-none d-block");
-		
+
 				$("#chat-title").text(["Chat", "Sohbet", "Chat"][["en", "tr", "de"].indexOf(chat.getCookie("language"))]);
 				$("#chat-title").toggleClass("extra-small-text");
-		
+
 				$("#chat-title-area").toggleClass("align-items-start gap-2");
 				$("#chat-title-area").toggleClass("d-flex");
-		
+
 				$("#go-back").toggleClass("d-block d-none");
 				$("#chat-bar").toggleClass("w-50 w-100");
 				$("#chatBtn").toggleClass("normal anormal");
@@ -163,10 +163,10 @@ class Chat{
 			return;
 		var yeniLi = $("<li>").addClass("d-flex flex-column gap-1 bg-light p-1 pe-auto notification-item");
 		yeniLi.attr("data-gfr-uid", `${gameInvite.from_uid}`);
-	
+
 		var innerDiv1 = $("<div>").addClass("d-flex gap-1 justify-content-evenly align-items-center micro-text lh-base");
 		var innerDiv2 = $("<div>").addClass("d-flex gap-1 justify-content-evenly");
-	
+
 		var resim = $("<img>").addClass("rounded-circle img-chat ms-2").attr("src", `${gameInvite.from_thumbnail}`).attr("alt", "profil_resmi");
 		var isimSpan = $("<span>").text(`${gameInvite.from_displayname}`);
 
@@ -175,16 +175,16 @@ class Chat{
 
 		innerDiv1.append(resim, isimSpan);
 		innerDiv2.append(kabulButon, reddetButon);
-	
+
 		yeniLi.append(innerDiv1, innerDiv2);
-	
+
 		//Buton event listenerları
 		kabulButon.on("click", ()=>{
 			console.log("TURNUva isteğini kabul ediyom");
 			$(kabulButon).closest("li").remove();
 			chat.sendMessage("gameAccept", {"from_uid": $(kabulButon).closest(`li.notification-item[data-gfr-uid]`).attr("data-gfr-uid")});
 		});
-	
+
 		reddetButon.on("click", ()=>{
 			console.log("TURNUva isteğini reddediyom");
 			$(reddetButon).closest("li").remove();
@@ -204,7 +204,7 @@ class Chat{
 	semiMatchsFinished(tid){
 		this.sendMessage("getTournamentMatchsEveryone", {"tournamentId": tid});
 	}
-	
+
 	getMatchPopup(tid){
 		console.log("*******************************");
 		console.log(tid);
@@ -262,7 +262,7 @@ class Chat{
 		if (invitableFriends && inviteList){
 			console.log(invitableFriends);
 			inviteList.html("");
-			
+
 			/* <div class="d-flex align-items-center gap-2">
     	        <div class="d-flex align-items-center">
     	            <img class="rounded-circle img-chat" src="#"></img>
@@ -272,7 +272,7 @@ class Chat{
     	            <button class="btn btn-success">Davet Et</button>
     	        </div>
     	    </div> */
-			
+
 			invitableFriends.forEach((element) => {
 				inviteList.append(`
 				<div class="d-flex w-100 gap-2 justify-content-between" data-user-uid="${element.uid}">
@@ -316,32 +316,32 @@ class Chat{
 			return;
 		var yeniLi = $("<li>").addClass("d-flex flex-column gap-1 bg-light p-1 pe-auto notification-item");
 		yeniLi.attr("data-tr-uid", `${youAreInvited.inviter_uid}`);
-	
-	
+
+
 		var innerDiv1 = $("<div>").addClass("d-flex gap-1 justify-content-evenly align-items-center micro-text lh-base");
 		var innerDiv2 = $("<div>").addClass("d-flex gap-1 justify-content-evenly");
-	
-	
+
+
 		var resim = $("<img>").addClass("rounded-circle img-chat ms-2").attr("src", `${youAreInvited.inviter_thumbnail}`).attr("alt", "profil_resmi");
 		var isimSpan = $("<span>").text(`${youAreInvited.inviter_displayname}`);
 		var tournamentName = $("<span>").text(`${youAreInvited.tournamentName}`);
-	
-	
+
+
 		var kabulButon = $("<button>").addClass("btn btn-success p-1").attr("type", "button").text(this.langText[chat.getCookie("language")]["accept"]);
 		var reddetButon = $("<button>").addClass("btn btn-danger p-1").attr("type", "button").text(this.langText[chat.getCookie("language")]["decline"]);
-	
+
 		innerDiv1.append(resim, isimSpan, tournamentName);
 		innerDiv2.append(kabulButon, reddetButon);
-	
+
 		yeniLi.append(innerDiv1, innerDiv2);
-	
+
 		//Buton event listenerları
 		kabulButon.on("click", ()=>{
 			console.log("TURNUva isteğini kabul ediyom");
 			$(kabulButon).closest("li").remove();
 			chat.sendMessage("tournamentAccept", {"tournamentId": youAreInvited.tournamentId});
 		});
-	
+
 		reddetButon.on("click", ()=>{
 			console.log("TURNUva isteğini reddediyom");
 			$(reddetButon).closest("li").remove();
@@ -374,7 +374,7 @@ class Chat{
 		//siteUrl = siteUrl.replace(/:8000$/, ':3000');
 		return siteUrl;
 	}
-	
+
 	getFriendsRequest(){
 		this.sendMessage("get-friends", "");
 	}
@@ -386,10 +386,10 @@ class Chat{
 	getMessageHistory(to_uid){
 		this.chatSocket.send(JSON.stringify({ "token": this.getCookie("token"), "mode": "get-message-history", "message": {"to": to_uid.toString()}}));
 	}
-	
+
 	putFriends(message){
 		$('.chat-profiles').html("");
-	
+
 		//console.log(message);
 		var isReaded = false;
 		message.friends.forEach(element => {
@@ -401,7 +401,7 @@ class Chat{
 			innerDiv.append($('<span>').addClass('h6 text-white mx-3').text(element.displayname));
 			innerDiv.append($('<span>').addClass('last-message small text-warning').text(lastMessage));
 			let readedDiv = $('<div>').addClass('d-flex align-items-center justify-content-center');
-	
+
 			if (element.isReaded == "False" ){
 				let m_icon = $('<i>').addClass('fa-solid fa-envelope text-warning');
 				readedDiv.append(m_icon);
@@ -411,15 +411,15 @@ class Chat{
 			content.append(readedDiv);
 			$('.chat-profiles').append(content);
 		});
-	
+
 		if (isReaded && $("#oceanIsReaded").length == 0){
 			let ocean_div = $('<div id="oceanIsReaded">').addClass("d-flex align-items-center justify-content-end w-50");
 			let ocean_i = $("<i>").addClass("fa-regular fa-circle text-info fs-5 ocean_shadow");
 			ocean_div.append(ocean_i);
 			$("#chat-bar").after(ocean_div);
 		}
-	
-	
+
+
 		$('.chat-person').click((e)=>{
 			let idx = $('.chat-person').index(e.target.closest('.chat-person'));
 			//console.log("Basılan kişi index: " + idx.toString());
@@ -458,14 +458,14 @@ class Chat{
 				)
 			)
 		);
-	
+
 		//console.log(message.message_history.messages);
-	
+
 		message.message_history.messages.forEach(elem => {
 			var sideClass = (elem.side == "left") ? "chat-left" : "chat-right";
 			var alignClass = (elem.side == "right") ? "align-self-end" : "";
 			var bgColorClass = (elem.side == "left") ? "bg-primary" : "bg-secondary";
-		
+
 			var mtimestamp = new Date(elem.timestamp);
 			var localOffsetHours = (new Date().getTimezoneOffset() / 60) * -1;
 			mtimestamp.setHours(mtimestamp.getHours() + localOffsetHours);
@@ -473,7 +473,7 @@ class Chat{
 			var minute = mtimestamp.getMinutes();
 			//console.log(mtimestamp);
 			var lastTimestampString = hour.toString().padStart(2, '0') + ':' + minute.toString().padStart(2, '0');
-		
+
 			var htmlContent = $("<div>").addClass(`d-flex flex-nowrap gap-2 ${sideClass} ${alignClass}`).append(
 				$("<div>").append(
 					$("<div>").addClass(`${bgColorClass} chat-item d-flex flex-column px-2 py-1`).append(
@@ -482,7 +482,7 @@ class Chat{
 					)
 				)
 			);
-		
+
 			$("#chat-area").append(htmlContent);
 		});
 		$("#chat-profile").attr("data-person-uid", message.message_history.to_uid);
@@ -500,7 +500,7 @@ class Chat{
 		$(".chat-container").scrollTop($(".chat-container")[0].scrollHeight);
 		$("#chat-title").toggleClass("extra-small-text");
 		$("#chat-title-area").toggleClass("align-items-start gap-2");
-	
+
 		$("#btn-send").click((e)=>{
 			let to_uid = $("#chat-profile").attr("data-person-uid");
 			let content = $("#msg-content").val();
@@ -517,7 +517,7 @@ class Chat{
 				gamemode = e.target.closest("li").getAttribute("data-gameInviteMode");
 			this.sendMessage("match-invite", {"to": to_uid, "gamemode": gamemode});
 		});
-		
+
 		$("#msg-content").keypress(function(event){
 			var keycode = (event.keyCode ? event.keyCode : event.which);
 			let content = $("#msg-content").val();
@@ -528,7 +528,7 @@ class Chat{
 			}
 		});
 	}
-	
+
 	escapeHtml(text) {
 		var map = {
 			'&': '&amp;',
@@ -545,44 +545,44 @@ class Chat{
 		audio.volume = 0.1;
 		audio.play();
 	}
-	
+
 	putMessage(sended_message, warning){
 		if (warning != ""){
 			alert(warning);
 			return;
 		}
-	
+
 		if (this.in_sohbet == 0){
 			this.playNotification();
 			this.getFriendsRequest();
 			return;
 		}
-	
+
 		let from, to, content, timestamp;
-	
+
 		from = sended_message.from;
 		to = sended_message.to;
 		content = sended_message.content;
 		timestamp = sended_message.timestamp;
-	
+
 		var mtimestamp = new Date(timestamp);
-	
+
 		// Yerel saat dilimine göre saat ekleme
 		var localOffsetHours = (new Date().getTimezoneOffset() / 60) * -1; // Saat cinsinden yerel zaman dilimi ofseti
 		mtimestamp.setHours(mtimestamp.getHours() + localOffsetHours);
 		var hour = mtimestamp.getHours();
 		var minute = mtimestamp.getMinutes();
 		var lastTimestampString = hour.toString().padStart(2, '0') + ':' + minute.toString().padStart(2, '0');
-	
+
 		var activePersonUid = $("#chat-profile").attr("data-person-uid");
-	
+
 		if ((activePersonUid == from || activePersonUid == to) && this.in_sohbet == 1) {
 			var sideClass = (activePersonUid == from) ? "chat-left" : "chat-right";
 			var alignClass = (activePersonUid == to) ? "align-self-end" : "";
 			var bgColorClass = (activePersonUid == from) ? "bg-primary" : "bg-secondary";
-	
-	
-	
+
+
+
 			var htmlContent = `
 				<div class="d-flex flex-nowrap gap-2 ${sideClass} ${alignClass}">
 					<div>
@@ -593,7 +593,7 @@ class Chat{
 					</div>
 				</div>
 			`;
-	
+
 			$("#chat-area").append(htmlContent);
 			$(".chat-container").scrollTop($(".chat-container")[0].scrollHeight);
 			if (activePersonUid == from)
@@ -630,13 +630,13 @@ class Chat{
 		switch(friendShipView.type){
 			case "youAreBlocked":
 				if (path == `/user/${friendShipView.to_username}`){
-					$("#profileButtons p:nth-child(3)").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
+					$("#worriedP").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
 					$("button[data-request-mod=cancelRequest]").remove();
 				}
 				break;
 			case "friendrequest":
 				if (path == `/user/${friendShipView.from_username}`){
-					$("#profileButtons p:nth-child(3)").after(`<button data-request-mod="acceptRequest" class="btn btn-success friend-request">${this.langText[chat.getCookie("language")]["accept"]}</button>\
+					$("#worriedP").after(`<button data-request-mod="acceptRequest" class="btn btn-success friend-request">${this.langText[chat.getCookie("language")]["accept"]}</button>\
 					<button data-request-mod="declineRequest" class="btn btn-danger friend-request">${this.langText[chat.getCookie("language")]["decline"]}</button>`);
 					$("button[data-request-mod=sendRequest]").remove();
 				}
@@ -645,7 +645,7 @@ class Chat{
 				switch(friendShipView.status){
 					case "accept":
 						$("button[data-request-mod=cancelRequest]").remove();
-						$("#profileButtons p:nth-child(3)").after(`<button data-request-mod="unfriendRequest" class="btn btn-outline-danger friend-request">${this.langText[chat.getCookie("language")]["unfriend"]}</button>\
+						$("#worriedP").after(`<button data-request-mod="unfriendRequest" class="btn btn-outline-danger friend-request">${this.langText[chat.getCookie("language")]["unfriend"]}</button>\
 						<button id="messagebtn" class="btn btn-primary">${this.langText[chat.getCookie("language")]["msg"]}</button>`);
 						$("#messagebtn").click((e) => {
 							if ($("#chatBtn i").hasClass("fa-chevron-up"))
@@ -658,19 +658,19 @@ class Chat{
 						break;
 					case "reject":
 						$("button[data-request-mod=cancelRequest]").remove();
-						$("#profileButtons p:nth-child(3)").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
+						$("#worriedP").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
 						break;
 				}
 				break;
 			case "unfriend":
 				$("button[data-request-mod=unfriendRequest]").remove();
 				$("#messagebtn").remove();
-				$("#profileButtons p:nth-child(3)").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
+				$("#worriedP").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
 				break;
 			case "cancel":
 				$("button[data-request-mod=acceptRequest]").remove();
 				$("button[data-request-mod=declineRequest]").remove();
-				$("#profileButtons p:nth-child(3)").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
+				$("#worriedP").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
 				break;
 			default:
 				break;
@@ -725,10 +725,10 @@ class Chat{
 			game.createFrontend(this.matchStatus);
 		}else{
 			$("#searchGame").click((e) => {
-				let gametype = this.escapeHtml($("#modes option:selected").val());
+				let gametype = chat.escapeHtml($("#modes option:selected").val());
 				//console.log("gametype: " + gametype);
 				if (gametype.length > 0)
-					this.sendMessage("getMatch", gametype);
+					chat.sendMessage("getMatch", gametype);
 			});
 		}
 	}

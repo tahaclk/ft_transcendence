@@ -39,7 +39,7 @@ class LocalGame{
 			player3: "",
 			player4: ""
 		};
-		
+
 		this.matchs = {
 			match1: {
 				player1: "",
@@ -66,7 +66,7 @@ class LocalGame{
 				score2: 0
 			}
 		};
-		
+
 		this.PongGame = class PongGame {
 			static BIG_BALL = 1;
 			static SMALL_BALL = 2;
@@ -77,13 +77,13 @@ class LocalGame{
 			static NO_COLOR = 0;
 			static RED = 1;
 			static GREEN = 2;
-		
+
 			static WINNING_SCORE = 3;
 			static WINNER_NAME = "";
 			static stopDeathRound = false;
 			static isGoal = false;
 			static gameReady = false;
-		
+
 			static powerup = {
 				radius: 40,
 				x : 0,
@@ -91,7 +91,7 @@ class LocalGame{
 				type: 0,
 				borderColor: PongGame.NO_COLOR,
 				active: 0,
-		
+
 				draw() {
 					console.log("Powerup çiziyom");
 					localGame.pong.context.fillStyle = this.borderColor == PongGame.RED  ? '#ff0000' : this.borderColor == PongGame.GREEN  ? '#00cc00' : '#333333';
@@ -100,7 +100,7 @@ class LocalGame{
 					localGame.pong.context.fill();
 					localGame.pong.context.drawImage(localGame.imageList[this.type - 1], (this.x - this.radius) * localGame.pong.ratio, (this.y - this.radius) * localGame.pong.ratio, this.radius * 2 * localGame.pong.ratio, this.radius * 2 * localGame.pong.ratio);
 				},
-		
+
 				destroy() {
 					this.borderColor = PongGame.NO_COLOR;
 					this.x = 0;
@@ -108,7 +108,7 @@ class LocalGame{
 					this.type = 0;
 					this.active = 0;
 				},
-		
+
 				reset(){
 					localGame.pong.ball.MAX_SPEED = 15.0;
 					localGame.pong.ball.radius = 20.0 * localGame.pong.ratio;
@@ -125,7 +125,7 @@ class LocalGame{
 					this.type = Math.round(Math.random() * 5) + 1;
 					this.borderColor =  (this.type == 3 || this.type == 4) ? Math.round(Math.random()) + 1 : PongGame.NO_COLOR;
 				},
-				
+
 				deactivate(){
 					localGame.pong.ball.MAX_VEL = 15.0;
 					localGame.pong.ball.radius = 20.0 * localGame.pong.ratio;
@@ -208,7 +208,7 @@ class LocalGame{
 					localGame.pong.lastPowerUpTime = Date.now() - 10000;
 				}
 			};
-		
+
 			constructor(canvasWidth, canvasHeight) {
 				PongGame.WINNER_NAME = "";
 				this.canvasWidth = canvasWidth;
@@ -236,11 +236,11 @@ class LocalGame{
 					MAX_SPEED: 15.0,
 					radius: 20.0 * this.ratio,
 					speedX: Math.random() < 0.5 ? 15.0 : -15.0,
-					speedY: (Math.random() * 2 - 1) * 15.0,
+					speedY: (Math.random() - 0.5) * 15.0,
 					x: this.canvasWidth / 2.0,
 					y: this.canvasHeight / 2.0
 				};
-		
+
 				this.leftPaddle = {
 					width: 6 * this.ratio,
 					height: 200 * this.ratio,
@@ -258,7 +258,7 @@ class LocalGame{
 						this.y = (canvasHeight / 2) - ((200 * ratio) / 2);
 					}
 				};
-		
+
 				this.rightPaddle = {
 					width: 6 * this.ratio,
 					height: 200 * this.ratio,
@@ -277,7 +277,7 @@ class LocalGame{
 						this.y = (canvasHeight / 2) - ((200 * ratio) / 2);
 					}
 				};
-		
+
 				this.keys = {
 					38: false,
 					40: false,
@@ -285,7 +285,7 @@ class LocalGame{
 					83: false
 				};
 			}
-			
+
 			powerUpEffects(){
 				console.log("POWERUP EFFECTS");
 				console.log(Date.now());
@@ -325,7 +325,7 @@ class LocalGame{
 				}
 				requestAnimationFrame(fk);
 			}
-		
+
 			resize(gameWidth) {
 				this.canvas.width = gameWidth;
 				this.canvas.height = Math.floor(gameWidth / 14 * 10);
@@ -352,16 +352,16 @@ class LocalGame{
 						this.context.fillText(`${PongGame.WINNER_NAME} wins!`, this.canvasWidth / 2, this.canvasHeight / 2);
 					});
 			}
-		
+
 			draw() {
 				this.context.fillStyle = '#000000';
 				this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-		
+
 				// Draw paddles
 				this.context.fillStyle = '#ffffff';
 				this.context.fillRect(this.leftPaddle.x, this.leftPaddle.y, this.leftPaddle.width, this.leftPaddle.height);
 				this.context.fillRect(this.rightPaddle.x, this.rightPaddle.y, this.rightPaddle.width, this.rightPaddle.height);
-		
+
 				// Draw ball
 				this.context.beginPath();
 				this.context.arc(this.ball.x, this.ball.y, this.ball.radius, 0, Math.PI * 2);
@@ -370,21 +370,21 @@ class LocalGame{
 				else
 					this.context.fillStyle = '#ffffff';
 				this.context.fill();
-		
+
 				// Draw scores
 				this.context.fillStyle = '#ffffff';
 				this.context.font = `${50 * this.ratio}px regular5x3`;
 				this.context.fillText(this.score1.toString(), this.canvasWidth / 4, 70 * this.ratio);
 				this.context.fillText(this.score2.toString(), (3 * this.canvasWidth) / 4, 70 * this.ratio);
-		
+
 				if (PongGame.powerup.type != 0 && PongGame.powerup.active == 0){
 					PongGame.powerup.draw();
 				}
 			}
-		
+
 			movePaddles(){
 				let _data = {"u": Number(this.keys[38]), "d": Number(this.keys[40]), "w": Number(this.keys[87]), "s": Number(this.keys[83])};
-		
+
 				if (_data.u)
 					this.rightPaddle.y -= this.rightPaddle.speed * this.ratio;
 				if (_data.d)
@@ -398,7 +398,7 @@ class LocalGame{
 				if (this.rightPaddle.y < 0 || this.rightPaddle.y > this.canvas.height - this.rightPaddle.height)
 					this.rightPaddle.y = this.rightPaddle.y < 0 ? 0 : this.canvas.height - this.rightPaddle.height;
 			}
-		
+
 			initKeyboardEvents() {
 				let keys = this.keys;
 				document.addEventListener("keydown", function(e){
@@ -412,7 +412,7 @@ class LocalGame{
 					}
 				});
 			}
-		
+
 			update() {
 				console.log("GİRDİM ULAN");
 				// Move ball
@@ -476,12 +476,12 @@ class LocalGame{
 					this.ball.speedY = (this.ball.speedY / 100.0) * 101.5;
 				}
 			}
-			
+
 			reset() {
 				this.ball.x = this.canvasWidth / 2;
 				this.ball.y = this.canvasHeight / 2;
 				this.ball.speedX = Math.random() < 0.5 ? 15.0 : -15.0;
-				this.ball.speedY = (Math.random() * 2 - 1) * 15.0;
+				this.ball.speedY = (Math.random() - 0.5) * 15.0;
 				this.leftPaddle.reset(this.oldRatio, this.ratio, this.canvasWidth, this.canvasHeight);
 				this.rightPaddle.reset(this.oldRatio, this.ratio, this.canvasWidth, this.canvasHeight);
 				//reset Timestamps
@@ -490,7 +490,7 @@ class LocalGame{
 				this.lastTouchedPlayer = -1;
 				this.lastEffectedPlayer = -1;
 			}
-		
+
 			resetDeathRound(){
 				$(this.canvas).css("position", "static");
 				$(this.canvas).css("box-shadow", "none");
@@ -498,12 +498,12 @@ class LocalGame{
 				$(this.canvas).css("transform", `rotate(0deg)`);
 				PongGame.stopDeathRound = true;
 			}
-		
+
 			deathRound(deg)
 			{
 				$(this.canvas).css("transform", `rotate(${deg.toString()}deg)`);
 			}
-		
+
 			start(mode) {
 				if (mode == "normal"){
 					if (!PongGame.gameReady)
@@ -556,7 +556,7 @@ class LocalGame{
 				PongGame.powerup.reset();
 				return (1);
 			}
-			
+
 			scoreCheck(){
 				if (this.ball.x - this.ball.radius > this.canvasWidth){
 					this.score1++;
@@ -570,7 +570,7 @@ class LocalGame{
 					PongGame.isGoal = true;
 				}
 			}
-			
+
 			finishGame(semiMatchsFinished = false){
 				console.log("localGame over");
 				this.resetDeathRound();
@@ -740,7 +740,7 @@ class LocalGame{
 			gameWidth = wWidth - (wWidth / 10);
 		}
 		$("#onGame").css("width", gameWidth.toString() + "px");
-	
+
 		this.pong = new this.PongGame(gameWidth, Math.floor(gameWidth / 14 * 10));
 		console.log("PONGGAME OBJECT CREATED");
 		window.addEventListener("resize", ()=>{

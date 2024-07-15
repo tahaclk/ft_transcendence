@@ -10,7 +10,7 @@ class Game{
 		this.rabbit = new Image();
 		this.turtle = new Image();
 		this.buffer = {oldscore1: 0, oldscore2: 0, score1: 0,score2: 0}
-		
+
 		this.rabbit.src = "/static/img/rabbit.png";
 		this.turtle.src = "/static/img/turtle.png";
 		this.smallBall.src = "/static/img/smallBall.png";
@@ -49,14 +49,14 @@ class Game{
 			static NO_COLOR = 0;
 			static RED = 1;
 			static GREEN = 2;
-		
+
 			static gameReady = false;
 			static WINNING_SCORE = 3;
 			static WINNER_NAME = "";
 			static lastRoundStartTime = 0;
 			//static stopDeathRound = false;
 			static isGoal = false;
-		
+
 			static powerup = {
 				radius: 40,
 				x : 0,
@@ -64,8 +64,8 @@ class Game{
 				type: 0,
 				borderColor: PongGame.NO_COLOR,
 				active: 0,
-		
-		
+
+
 				draw() {
 					game.pong.context.fillStyle = this.borderColor == PongGame.RED  ? '#ff0000' : this.borderColor == PongGame.GREEN  ? '#00cc00' : '#333333';
 					game.pong.context.beginPath();
@@ -73,14 +73,14 @@ class Game{
 					game.pong.context.fill();
 					game.pong.context.drawImage(game.imageList[this.type - 1], (this.x - this.radius) * game.pong.ratio, (this.y - this.radius) * game.pong.ratio, this.radius * 2 * game.pong.ratio, this.radius * 2 * game.pong.ratio);
 				},
-		
+
 				destroy() {
 					this.borderColor = PongGame.NO_COLOR;
 					this.x = 0;
 					this.y = 0;
 					this.type = 0;
 				},
-		
+
 				reset(){
 					game.pong.MAX_SPEED = 15.0;
 					game.pong.ball.radius = 20.0 * game.pong.ratio;
@@ -89,7 +89,7 @@ class Game{
 					this.active = 0;
 				}
 			}
-		
+
 			constructor(canvasWidth, canvasHeight) {
 				PongGame.WINNER_NAME = "";
 				this.canvasWidth = canvasWidth;
@@ -123,7 +123,7 @@ class Game{
 					x: this.canvasWidth / 2.0,
 					y: this.canvasHeight / 2.0
 				};
-		
+
 				this.leftPaddle = {
 					width: 6 * this.ratio,
 					height: 200 * this.ratio,
@@ -137,7 +137,7 @@ class Game{
 						this.y = this.y / oldRatio * ratio;
 					}
 				};
-		
+
 				this.rightPaddle = {
 					width: 6 * this.ratio,
 					height: 200 * this.ratio,
@@ -152,20 +152,20 @@ class Game{
 						this.y = this.y / oldRatio * ratio;
 					}
 				};
-		
+
 				this.keys = {
 					38: false,
 					40: false
 				};
 			}
-		
+
 			putLostConnection(data){
 				console.log("waiting");
 				const finishTime = new Date(data.wait.finishTime).getTime();
 				let second = Math.ceil((finishTime - Date.now() + this.serverDelta) / 1000);
-		
+
 				let waiting = () => {
-		
+
 					this.context.fillStyle = '#000000';
 					this.context.fillRect(0,0, this.canvasWidth, this.canvasHeight);
 					this.context.fillStyle = '#FFFFFF';
@@ -193,11 +193,11 @@ class Game{
 							delete this;
 						}
 					}
-		
+
 				}
 				requestAnimationFrame(waiting);
 			}
-		
+
 			Counter(deltaTime){
 				const gameStartTimestamp = new Date(chat.matchStatus.game_startTimestamp).getTime();
 				let second = Math.ceil((gameStartTimestamp - Date.now() + deltaTime) / 1000);
@@ -225,7 +225,7 @@ class Game{
 				}
 				requestAnimationFrame(fk);
 			}
-		
+
 			resize(gameWidth) {
 				this.canvas.width = gameWidth;
 				this.canvas.height = Math.floor(gameWidth / 14 * 10);
@@ -253,16 +253,16 @@ class Game{
 						chat.matchStatus = undefined;
 					});
 			}
-		
+
 			draw() {
 				this.context.fillStyle = '#000000';
 				this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-		
+
 				// Draw paddles
 				this.context.fillStyle = '#ffffff';
 				this.context.fillRect(this.leftPaddle.x, this.leftPaddle.y, this.leftPaddle.width, this.leftPaddle.height);
 				this.context.fillRect(this.rightPaddle.x, this.rightPaddle.y, this.rightPaddle.width, this.rightPaddle.height);
-		
+
 				// Draw ball
 				this.context.beginPath();
 				this.context.arc(this.ball.x, this.ball.y, this.ball.radius, 0, Math.PI * 2);
@@ -271,23 +271,23 @@ class Game{
 				else
 					this.context.fillStyle = '#ffffff';
 				this.context.fill();
-		
+
 				// Draw scores
 				this.context.fillStyle = '#ffffff';
 				this.context.font = `${50 * this.ratio}px regular5x3`;
 				this.context.fillText(this.score1.toString(), this.canvasWidth / 4, 70 * this.ratio);
 				this.context.fillText(this.score2.toString(), (3 * this.canvasWidth) / 4, 70 * this.ratio);
-		
+
 				if (PongGame.powerup.type != 0){
 					PongGame.powerup.draw();
 				}
 			}
-		
+
 			movePaddles(){
 				//console.log("movePaddles yunikmetin");
 				let _data = {"u": Number(this.keys[38]), "d": Number(this.keys[40])};
 				game.sendGameMessage("mv", _data);
-		
+
 				if (_data.u)
 					this.rightPaddle.y -= this.rightPaddle.speed * this.ratio;
 				if (_data.d)
@@ -297,7 +297,7 @@ class Game{
 				if (this.rightPaddle.y < 0 || this.rightPaddle.y > this.canvas.height - this.rightPaddle.height)
 					this.rightPaddle.y = this.rightPaddle.y < 0 ? 0 : this.canvas.height - this.rightPaddle.height;
 			}
-		
+
 			initKeyboardEvents() {
 				let keys = this.keys;
 				document.addEventListener("keydown", function(e){
@@ -313,7 +313,7 @@ class Game{
 					}
 				});
 			}
-		
+
 			update() {
 				let tmp = false;
 				// Move ball
@@ -353,7 +353,7 @@ class Game{
 				}
 				//console.log("speedX:" + this.ball.speedX + " speedY:" + this.ball.speedY);
 				// Check if ball goes out of bounds
-		
+
 				/* if (this.ball.x - this.ball.radius < 0 && !tmp) {
 				//	(yourOriginalSide == "right") ? this.score1++ : this.score2++;
 					this.reset();
@@ -372,7 +372,7 @@ class Game{
 				this.ball.speedX = 0.0;
 				this.ball.speedY = 0.0;
 			}
-		
+
 			resetDeathRound(lrs){
 				$(this.canvas).css("position", "static");
 				$(this.canvas).css("box-shadow", "none");
@@ -381,12 +381,11 @@ class Game{
 				//PongGame.stopDeathRound = true;
 				PongGame.lastRoundStartTime = new Date(lrs).getTime();
 			}
-		
-			deathRound(deg)
-			{
+
+			deathRound(deg){
 				$(this.canvas).css("transform", `rotate(${deg.toString()}deg)`);
 			}
-		
+
 			start(mode) {
 				if (mode == "normal"){
 					if (!PongGame.gameReady){
@@ -432,7 +431,7 @@ class Game{
 				return 1;
 			}
 
-			
+
 			finishGame(semiMatchsFinished = false){
 				$("#gameMusic")[0].pause();
 				console.log("game over");
@@ -468,7 +467,7 @@ class Game{
 							game.gameSocket.close(1000);
 							game.gameSocket = undefined;
 						}
-					})
+					});
 					chat.matchStatus = undefined;
 				});
 				if (game.gameSocket && game.gameSocket.readyState == WebSocket.OPEN){
@@ -488,7 +487,7 @@ class Game{
 		$("#leftTheGameBtn").off("click");
 		$("#leftTheGameBtn").attr("data-bs-toggle", "modal");
 		$("#leftTheGameBtn").attr("data-bs-target", "#surrenderModal");
-	
+
 		if (data.p1_uid == ownUid){
 			$("#player1 h4").text(data.p2_displayname);
 			$("#player1 img").attr("src", data.p2_thumbnail);
@@ -509,11 +508,11 @@ class Game{
 		if (this.gameSocket != undefined && this.gameSocket.readyState === WebSocket.OPEN)
 			this.gameSocket.send(JSON.stringify({"mode": mode, "message": message }));
 	}
-	
+
 	calcTimeDelta(time){
 		const _time = new Date(time).getTime();
 		const now = Date.now();
-	
+
 		const delta = now - _time;
 		this.pong.serverDelta = delta;
 		this.pong.Counter(delta);
@@ -539,7 +538,7 @@ class Game{
 	createGameSocket(){
 		let _host = siteUrl.replace(/^https?:\/\//, '');
 		//_host = _host.replace(/:8000$/, ':3000');
-	
+
 		this.gameSocket = new WebSocket(`wss://${_host}:3000/ws/game/${chat.matchStatus.game_uuid}/${chat.getCookie("token")}/`);
 		this.gameSocket.onopen = function(e) {
 			game.sendGameMessage("getTimeStamp", "");
@@ -665,8 +664,8 @@ class Game{
 				this.PongGame.gameReady = false;
 			}
 		}
-	
-		
+
+
 	}
 
 	startGame(){
@@ -680,7 +679,7 @@ class Game{
 			gameWidth = wWidth - (wWidth / 10);
 		}
 		$("#onGame").css("width", gameWidth.toString() + "px");
-	
+
 		this.pong = new this.PongGame(gameWidth, Math.floor(gameWidth / 14 * 10));
 		console.log("PONGGAME OBJECT CREATED");
 		window.addEventListener("resize", ()=>{

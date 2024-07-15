@@ -169,7 +169,7 @@ class Ball:
 		self.y = self.original_y = y
 		self.radius = radius
 		self.x_vel = list([-1, 1])[random.randint(0,1)] * self.MAX_VEL
-		self.y_vel = random.uniform(-1.0, 1.0) * self.MAX_VEL
+		self.y_vel = random.uniform(-0.5, 0.5) * self.MAX_VEL
 
 	def move(self):
 		self.x = round(self.x + self.x_vel, 3)
@@ -179,7 +179,7 @@ class Ball:
 		self.x = self.original_x
 		self.y = self.original_y
 		self.x_vel = list([-1, 1])[random.randint(0,1)] * self.MAX_VEL
-		self.y_vel = random.uniform(-1.0, 1.0) * self.MAX_VEL
+		self.y_vel = random.uniform(-0.5, 0.5) * self.MAX_VEL
 
 class PongGame:
 	def __init__(self, startTime, room_name):

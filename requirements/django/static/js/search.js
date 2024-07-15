@@ -89,24 +89,24 @@ class Search
 			return;
 		var yeniLi = $("<li>").addClass("d-flex flex-column gap-1 bg-light p-1 pe-auto notification-item");
 		yeniLi.attr("data-fr-uid", `${friendShipRequest.from_uid}`);
-	
-	
+
+
 		var innerDiv1 = $("<div>").addClass("d-flex gap-1 justify-content-evenly align-items-center micro-text lh-base");
 		var innerDiv2 = $("<div>").addClass("d-flex gap-1 justify-content-evenly");
-	
-	
+
+
 		var resim = $("<img>").addClass("rounded-circle img-chat ms-2").attr("src", `${friendShipRequest.thumbnail}`).attr("alt", "profil_resmi");
 		var isimSpan = $("<span>").text(`${friendShipRequest.displayname}`);
-	
-	
+
+
 		var kabulButon = $("<button>").addClass("btn btn-success p-1").attr("type", "button").text(this.langText[chat.getCookie("language")]["accept"]);
 		var reddetButon = $("<button>").addClass("btn btn-danger p-1").attr("type", "button").text(this.langText[chat.getCookie("language")]["decline"]);
-	
+
 		innerDiv1.append(resim, isimSpan);
 		innerDiv2.append(kabulButon, reddetButon);
-	
+
 		yeniLi.append(innerDiv1, innerDiv2);
-	
+
 		//Buton event listenerları
 		kabulButon.on("click", ()=>{
 			let newfrq_uid = $(kabulButon).closest("li").attr("data-fr-uid");
@@ -116,11 +116,11 @@ class Search
 			if (path == "/user/"+friendShipRequest.from_username){
 				$("button[data-request-mod=acceptRequest]").remove();
 				$("button[data-request-mod=declineRequest]").remove();
-				$("#profileButtons p:nth-child(3)").after(`<button data-request-mod="unfriendRequest" class="btn btn-outline-danger friend-request">${this.langText[chat.getCookie("language")]["unfriend"]}<</button>`);
+				$("#worriedP").after(`<button data-request-mod="unfriendRequest" class="btn btn-outline-danger friend-request">${this.langText[chat.getCookie("language")]["unfriend"]}<</button>`);
 			}
 			chat.sendMessage("friendShipResponse", {"to_uid": newfrq_uid, "response": response});
 		});
-	
+
 		reddetButon.on("click", ()=>{
 			let newfrq_uid = $(reddetButon).closest("li").attr("data-fr-uid");
 			var path = window.location.pathname;
@@ -129,7 +129,7 @@ class Search
 			if (path == "/user/"+friendShipRequest.from_username){
 				$("button[data-request-mod=acceptRequest]").remove();
 				$("button[data-request-mod=declineRequest]").remove();
-				$("#profileButtons p:nth-child(3)").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
+				$("#worriedP").after(`<button data-request-mod="sendRequest" class="btn btn-outline-primary friend-request">${this.langText[chat.getCookie("language")]["friendReq"]}</button>`);
 			}
 			chat.sendMessage("friendShipResponse", {"to_uid": newfrq_uid, "response": response});
 		});
@@ -144,7 +144,7 @@ class Search
 		}
 	}
 
-	putRequestList(frq){		
+	putRequestList(frq){
 		let gameRequestList = frq.games;
 		let tournamentRequestList = frq.tournaments;
 		console.log("turnuva istekleri \n");
@@ -152,7 +152,7 @@ class Search
 		let friendRequestList = frq.users;
 		console.log("Frienddd istek: \n");
 		console.log(friendRequestList);
-		
+
 		let text =  this.langText[chat.getCookie("language")]["endOfNotifications"];
 		console.log("NOLUYO LAN text: ", text);
 		$("#notificationsDropdown").html(`<div class="p-0 m-0" id="endofnotifications"><hr>\
@@ -177,5 +177,5 @@ class Search
 			}
 		});
 	}
-	
+
 }

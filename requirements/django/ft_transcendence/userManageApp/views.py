@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from userManageApp.forms import AvatarUpdateForm
 from django.shortcuts import get_object_or_404
 from django.core.files.base import ContentFile
+from django.db.models import Q
 import json
 import requests
 import os
@@ -96,11 +97,11 @@ def saveUser(cursus_data):
 				username=cursus_data['login'],
 				displayname=cursus_data['displayname']
 			)
-			
+
 			#User ile birlikte bir stats objesi oluştur
 			"""new_user_stats = UserStats.objects.create(user=new_user)
 			new_user_stats.save()"""
-		
+
 			# Resmi modeldeki imageLarge alanına ata
 			new_user.imageLarge.save(f"{new_user.username}_large.jpg", ContentFile(image_response.content), save=False)
 			new_user.save()
@@ -178,6 +179,10 @@ def blockRequest(request):
 						bl = BlockList.objects.filter(blocker=_from, blocked=_to)
 						if not bl.exists():
 							newBl = BlockList.objects.create(blocker=_from, blocked=_to)
+							if Friendship.are_friends(_from, _to):
+								fr = Friendship.objects.filter(Q(user1=_from, user2=_to) | Q(user1=_to, user2=_from))
+								if fr.exists():
+									fr.delete()
 							newBl.save()
 					case "unblock":
 						bl = BlockList.objects.filter(blocker=_from, blocked=_to)
